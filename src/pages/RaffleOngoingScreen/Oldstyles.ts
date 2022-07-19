@@ -19,15 +19,15 @@ export const useStyles = makeStyles<Theme, { device: DeviceType }>(
     },
     textHighlight: {
       //fontWeight: 'bold',
-      fontSize: '20px !important',
+      fontSize:'20px !important',
       color: '#81d4f2',
       marginBottom: '10px',
     },
     textHighlight1: {
       //fontWeight: 'bold',
-      fontSize: '16px !important',
+      fontSize:'16px !important',
       // color: theme.palette.secondary.main,
-      color: '#81d4f2',
+      color: "#81d4f2",
       marginBottom: '10px',
     },
     topSection: {
@@ -38,7 +38,7 @@ export const useStyles = makeStyles<Theme, { device: DeviceType }>(
       flexDirection: 'column',
     },
     raffleTitle: {
-      color: '#81d4f2',
+      color: "#81d4f2",
       width: '100%',
       display: 'flex',
       flexDirection: 'row',
@@ -57,7 +57,7 @@ export const useStyles = makeStyles<Theme, { device: DeviceType }>(
       //paddingLeft:'20px',
       //justifyContent: 'center',
       textAlign: 'center',
-      color: '#81d4f2',
+      color: "#81d4f2"
     },
     rightTitleSection: {
       width: '10%',
@@ -71,9 +71,8 @@ export const useStyles = makeStyles<Theme, { device: DeviceType }>(
       },
     },
     countdown: ({ device }) => ({
-      // width: '251px',
-
-      fontFamily: 'Poppins',
+      width: '311px',
+      fontFamily:'Poppins',
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'center',
@@ -82,7 +81,7 @@ export const useStyles = makeStyles<Theme, { device: DeviceType }>(
       color: '#81d4f2',
       border: '1px solid #81d4f2',
       borderRadius: '40px',
-      padding: '3px 20px',
+      padding: '3px',
       WebkitTextStrokeWidth: '1px',
       //WebkitTextStrokeColor: theme.palette.secondary.main,
       //textShadow: `0 0 10px ${theme.palette.secondary.main}`,
@@ -122,7 +121,7 @@ export const useStyles = makeStyles<Theme, { device: DeviceType }>(
       height: '100%',
       display: 'flex',
       flexDirection: 'row',
-      fontFamily: 'Inter',
+      fontFamily:'Inter',
       //justifyContent: 'flex-end',
     },
     prizesSection: {
@@ -167,26 +166,26 @@ export const useStyles = makeStyles<Theme, { device: DeviceType }>(
       textAlign: 'center',
     },
     connectToBuyButton: {
-      fontFamily: 'Inter',
-      borderRadius: '25px',
-      padding: '5px 2rem',
+      width: '35%',
+      fontFamily:'Inter',
+      borderRadius:'25px',
       height: 'max-content',
-      minHeight: '50px',
-      fontWeight: 'bolder',
+      minHeight:'50px',
+      fontWeight:'bolder',
       background: 'none',
-      color: 'white',
-      border: '1px solid white',
+      color: "white",
+      border: "1px solid white"
     },
     connectToBuyButton1: {
       width: '100',
-      fontFamily: 'Inter',
-      borderRadius: '25px',
+      fontFamily:'Inter',
+      borderRadius:'25px',
       height: 'max-content',
-      minHeight: '30px',
-      fontWeight: 'bolder',
+      minHeight:'30px',
+      fontWeight:'bolder',
       background: 'none',
-      color: 'white',
-      border: '1px solid white',
+      color: "white",
+      border: "1px solid white"
     },
     scrollIcon: {
       color: 'black',

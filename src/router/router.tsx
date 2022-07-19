@@ -11,7 +11,7 @@ export const Router: FC = () => (
      
   <Switch>
     <Route path={`${routes.RAFFLES}/:id`} component={RaffleDetailsScreen} />
-    {/* <Route path={routes.RAFFLES} exact component={ExploreRafflesScreen} /> */}
+    <Route path={routes.RAFFLES} exact component={ExploreRafflesScreen} />
     <Route path='/' exact component={ExploreRafflesScreen}/>
     {/* <Route path='/auctions' exact component={AboutUS}/> */}
     {/* <Route path='/about' exact component={AboutUS}/> */}

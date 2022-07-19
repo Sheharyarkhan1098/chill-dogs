@@ -91,6 +91,13 @@ const AdminHomeScreen: FC = () => {
 
 
 
+  const [description, setDescription] = useState<String>("");
+  const [magicLink, setMagicLink] = useState<String>("");
+  const [discordLink, setDiscordLink] = useState<String>("");
+  const [twitterLink, setTwitterLink] = useState<String>("");
+  const [websiteLink, setWebsiteLink] = useState<String>("");
+  const [solanaLink, setSolanaLink] = useState<String>("");
+
   const [prizeAmount, setPrizeAmount] = useState<String>("");
   const [prizeIndex, setPrizeIndex] = useState<String>("");
   const [prizeAddress, setPrizeAddress] = useState<String>("");
@@ -101,6 +108,9 @@ const AdminHomeScreen: FC = () => {
   const [showCreate, setShowCreate] = useState<Boolean>(false);
   const [showAdd, setShowAdd] = useState<Boolean>(false);
   const [showWith, setShowWith] = useState<Boolean>(false);
+
+  const [splAddress, setSplAddress] = useState<String>("");
+  const [ataResponse, setAtaResponse] = useState<String>("");
 
   // constanst_config
 
@@ -136,6 +146,12 @@ const AdminHomeScreen: FC = () => {
     setCheckRaffleRes(result.data);
   }
 
+  async function getAta() {
+    const result = await axios(`${base_url}/getAta?splAddress=${splAddress}&cluster=${CLUSTER}&programId=${PROGRAM_ID}`);
+    console.log(result.data, "ata")
+    setAtaResponse(result.data);
+  }
+
   async function createRaffle() {
     // const result = await axios(`${base_url}/create-raffle?password=${password}&raffleName=${raffleName}&splToken=${splTokenAdd}&ticketPrice=${ticketPrice}&endDate=${endDate}&maxEntrants=${maxEntrants}&cluster=${CLUSTER}&programId=${PROGRAM_ID}`);
     const body = {
@@ -146,7 +162,13 @@ const AdminHomeScreen: FC = () => {
       endDate,
       maxEntrants,
       cluster: CLUSTER,
-      programId: PROGRAM_ID
+      programId: PROGRAM_ID,
+      description,
+      magicLink,
+      discordLink,
+      twitterLink,
+      websiteLink,
+      solanaLink
     }
     const result = await axios.post(`${base_url}/create-raffle`, body);
     console.log(result.data, "asdasdasds")
@@ -312,7 +334,8 @@ const AdminHomeScreen: FC = () => {
                 <Tab label="Check Raffle" {...a11yProps(0)} style={{ fontFamily: 'Poppins', color:'#A7A7A7'}} />
                 <Tab label="Create Raffle" {...a11yProps(1)} style={{ fontFamily: 'Poppins',color:'#A7A7A7' }} />
                 <Tab label="Add prize to raffle" {...a11yProps(2)} style={{ fontFamily: 'Poppins',color:'#A7A7A7' }} />
-                <Tab label="Withdraw" {...a11yProps(3)} style={{ fontFamily: 'Poppins',color:'#A7A7A7' }} />
+                <Tab label="Get ATA" {...a11yProps(3)} style={{ fontFamily: 'Poppins',color:'#A7A7A7' }} />
+                <Tab label="Withdraw" {...a11yProps(4)} style={{ fontFamily: 'Poppins',color:'#A7A7A7' }} />
 
               </Tabs>
             </Box>
@@ -366,6 +389,24 @@ const AdminHomeScreen: FC = () => {
                 <Grid item xs={12} sm={6} md={6} lg={6} className={classes.textFormStyle}>
                   <TextField color='secondary' className={classes.textFieldSx} label="Password" variant='outlined' onChange={(e) => { setPassword(e.target.value) }} InputProps={{style:{ color:'white'}}} InputLabelProps={{style:{color:'white'}}} />
                 </Grid>
+                <Grid item xs={12} sm={6} md={6} lg={6} className={classes.textFormStyle}>
+                  <TextField color='secondary' className={classes.textFieldSx} label="Description" variant='outlined' onChange={(e) => { setDescription(e.target.value) }} InputProps={{style:{ color:'white'}}} InputLabelProps={{style:{color:'white'}}} />
+                </Grid>
+                <Grid item xs={12} sm={6} md={6} lg={6} className={classes.textFormStyle}>
+                  <TextField color='secondary' className={classes.textFieldSx} label="Magic Eden Link" variant='outlined' onChange={(e) => { setMagicLink(e.target.value) }} InputProps={{style:{ color:'white'}}} InputLabelProps={{style:{color:'white'}}} />
+                </Grid>
+                <Grid item xs={12} sm={6} md={6} lg={6} className={classes.textFormStyle}>
+                  <TextField color='secondary' className={classes.textFieldSx} label="Discord Link" variant='outlined' onChange={(e) => { setDiscordLink(e.target.value) }} InputProps={{style:{ color:'white'}}} InputLabelProps={{style:{color:'white'}}} />
+                </Grid>
+                <Grid item xs={12} sm={6} md={6} lg={6} className={classes.textFormStyle}>
+                  <TextField color='secondary' className={classes.textFieldSx} label="Twitter Link" variant='outlined' onChange={(e) => { setTwitterLink(e.target.value) }} InputProps={{style:{ color:'white'}}} InputLabelProps={{style:{color:'white'}}} />
+                </Grid>
+                <Grid item xs={12} sm={6} md={6} lg={6} className={classes.textFormStyle}>
+                  <TextField color='secondary' className={classes.textFieldSx} label="Website Link" variant='outlined' onChange={(e) => { setWebsiteLink(e.target.value) }} InputProps={{style:{ color:'white'}}} InputLabelProps={{style:{color:'white'}}} />
+                </Grid>
+                <Grid item xs={12} sm={6} md={6} lg={6} className={classes.textFormStyle}>
+                  <TextField color='secondary' className={classes.textFieldSx} label="Solana Link" variant='outlined' onChange={(e) => { setSolanaLink(e.target.value) }} InputProps={{style:{ color:'white'}}} InputLabelProps={{style:{color:'white'}}} />
+                </Grid>
                 <br />
                 <Grid item xs={12} sm={12} md={12} lg={12} className={classes.textFormStyle2}>
                   <Button variant="outlined" onClick={createRaffle}  style={{ backgroundColor: "none", color: "white", border: "1px solid white", borderRadius: '5px', fontFamily: 'Poppins', padding: '10px 30px 10px 30px', marginTop: '20px' }}>Create Raffle</Button>
@@ -405,6 +446,19 @@ const AdminHomeScreen: FC = () => {
               </Grid>
             </TabPanel>
             <TabPanel value={value} index={3}>
+              <Grid container>
+                <Grid item xs={12} sm={12} md={12} lg={12} className={classes.textFormStyle}>
+                  <TextField color='secondary' className={classes.textFieldSx} label="Token Address" variant='outlined' onChange={(e) => { setSplAddress(e.target.value) }} InputProps={{style:{ color:'white'}}} InputLabelProps={{style:{color:'white'}}} />
+                </Grid>
+                <Grid item xs={12} sm={12} md={12} lg={12} className={classes.textFormStyle2}>
+                  <Button variant="contained" onClick={getAta}  style={{ backgroundColor: "#D39ADD", borderRadius: '25px', fontFamily: 'Poppins', padding: '10px 30px 10px 30px', marginTop: '20px' }}>Get ATA</Button>
+                </Grid>
+                <Grid item xs={12} sm={12} md={12} lg={12} className={classes.textFormStyle2}>
+                  <p style={{ color: "white" }}>{ataResponse}</p>
+                </Grid>
+              </Grid>
+            </TabPanel>
+            <TabPanel value={value} index={4}>
               <Grid container>
                 <Grid item xs={12} sm={6} md={6} lg={6} className={classes.textFormStyle}>
                   <TextField color='secondary' className={classes.textFieldSx} label="Raffle Id" variant='outlined' onChange={(e) => { setRaffleId(e.target.value) }} InputProps={{style:{ color:'white'}}} InputLabelProps={{style:{color:'white'}}} />
