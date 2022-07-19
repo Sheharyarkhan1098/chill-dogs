@@ -1,4 +1,4 @@
-import { FC, useMemo, useRef, useState } from 'react';
+import { FC, useMemo, useRef, useState, useEffect } from 'react';
 import { WalletMultiButton } from '@solana/wallet-adapter-material-ui';
 import { DoubleArrow } from '@material-ui/icons';
 import { Typography, Grid } from '@material-ui/core';
@@ -34,6 +34,7 @@ import valut from '../../assets/valut.png';
 import time from '../../assets/19.png';
 import reward from '../../assets/reward.png';
 import price from '../../assets/price.png';
+import axios from "axios";
 
 interface IRaffleOngoingScreenProps {
   raffle: Raffle;
@@ -48,6 +49,7 @@ const RaffleOngoingScreen: FC<IRaffleOngoingScreenProps> = ({
   const classes = { ...useCommonStyles(), ...(useStyles({ device }) as any) };
   const { push } = useHistory();
   const { draffleClient } = useProgramApis();
+  const [customRaffleData, setCustomRaffleData] = useState<any>({});
 
   const prizeGalleryRef = useRef<HTMLDivElement>(null);
   const matches = useMediaQuery('(max-width:600px)');
@@ -58,8 +60,23 @@ const RaffleOngoingScreen: FC<IRaffleOngoingScreenProps> = ({
       draffleClient.provider.wallet.publicKey.toString()
     );
   }, [raffle, draffleClient.provider.wallet?.publicKey]); // "Unnecessary" dependency required due to React not picking up change in publicKey subfield
+  
+  const base_url = "https://raffles.chilldogsclub.com";
+
+  useEffect(() => {
+    const getRaffles = async () =>  {
+      const data = await axios.get(`${base_url}/get-Raffles`);
+      console.log(data.data);
+      let currntRaffle = data.data.filter((obj: any) => obj[0] === raffle.publicKey.toString())
+      console.log(currntRaffle[0][1]);
+      setCustomRaffleData(currntRaffle[0][1]);
+    }
+    getRaffles();
+
+  },[])
 
   if (!raffle) return null;
+
   // const [num, setNum] = useState('');
 
   return (
@@ -78,7 +95,7 @@ const RaffleOngoingScreen: FC<IRaffleOngoingScreenProps> = ({
           <Grid item xs={12} md={4} lg={4} xl={3}>
             <div className="index-prize"></div>
             <Slider>
-              {[1, 2, 3, 4].map((i) => {
+              {raffle?.prizes?.map((obj, i) => {
                 return (
                   <>
                     <div
@@ -98,25 +115,26 @@ const RaffleOngoingScreen: FC<IRaffleOngoingScreenProps> = ({
                         width: '100%',
                         padding: '1rem',
                         marginTop: '1rem',
-                        background: 'white',
+                        background: 'none',
                       }}
                     >
-                      <img src={slide} alt="" style={{ width: '100%' }} />
-                    </div>
-                    <div style={{ textAlign: 'justify', color: 'white' }}>
-                      <h2 style={{ textAlign: 'center' }}>Description</h2>
-                      <div>
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry. Lorem Ipsum has been the
-                        industry's standard dummy text ever since the 1500s,
-                        when an unknown printer took a galley of type and
-                        scrambled.
-                      </div>
+                      <img src={obj.meta.imageUri} alt="" style={{ width: '100%' }} />
                     </div>
                   </>
                 );
               })}
             </Slider>
+               <div style={{ textAlign: 'justify', color: 'white' }}>
+                      <h2 style={{ textAlign: 'center' }}>Description</h2>
+                      <div>
+                        {/* Lorem Ipsum is simply dummy text of the printing and
+                        typesetting industry. Lorem Ipsum has been the
+                        industry's standard dummy text ever since the 1500s,
+                        when an unknown printer took a galley of type and
+                        scrambled. */}
+                        {customRaffleData?.description}
+                      </div>
+                    </div>
           </Grid>
           <Grid item xs={12} md={7} lg={8} xl={8}>
             <Typography
@@ -138,7 +156,9 @@ const RaffleOngoingScreen: FC<IRaffleOngoingScreenProps> = ({
                 margin: '0.5rem auto',
               }}
             >
-              <SocialMedia />
+              {customRaffleData && 
+                  <SocialMedia customRaffleData={customRaffleData} />
+                  }
             </Grid>
 
             <Grid item xs={12} lg={8} style={{ width: '100%', margin: 'auto' }}>
@@ -292,7 +312,7 @@ const RaffleOngoingScreen: FC<IRaffleOngoingScreenProps> = ({
                 )}
               </table>
             </Grid>
-            {raffle.prizes.length > 1 && (
+            {/* {raffle.prizes.length > 1 && (
               <>
                 <DoubleArrow className={classes.scrollIcon} />
                 <PrizeGalleryOngoing
@@ -300,7 +320,7 @@ const RaffleOngoingScreen: FC<IRaffleOngoingScreenProps> = ({
                   scrollRef={prizeGalleryRef}
                 />
               </>
-            )}
+            )} */}
           </Grid>
         </Grid>
       </div>

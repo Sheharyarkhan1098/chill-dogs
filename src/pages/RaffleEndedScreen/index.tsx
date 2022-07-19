@@ -51,6 +51,7 @@ import valut from '../../assets/valut.png';
 import time from '../../assets/19.png';
 import reward from '../../assets/reward.png';
 import price from '../../assets/price.png';
+import axios from "axios";
 
 interface IRaffleEndedScreenProps {
   raffle: Raffle;
@@ -66,6 +67,7 @@ const RaffleEndedScreen: FC<IRaffleEndedScreenProps> = ({
   const { push } = useHistory();
   const { draffleClient } = useProgramApis();
   const [open, setOpen] = useState(false);
+  const [customRaffleData, setCustomRaffleData] = useState<any>({});
   const [winnerResult, setWinnerResult] = useState<any>([]);
   const handleOpen = () => setOpen(false);
   const handleClose = () => setOpen(true);
@@ -81,7 +83,21 @@ const RaffleEndedScreen: FC<IRaffleEndedScreenProps> = ({
     p: 4,
   };
 
-  // console.log(raffle, "raflle")
+  const base_url = "https://raffles.chilldogsclub.com";
+
+  useEffect(() => {
+    const getRaffles = async () =>  {
+      const data = await axios.get(`${base_url}/get-Raffles`);
+      console.log(data.data);
+      let currntRaffle = data.data.filter((obj: any) => obj[0] === raffle.publicKey.toString())
+      console.log(currntRaffle[0][1]);
+      setCustomRaffleData(currntRaffle[0][1]);
+    }
+    getRaffles();
+
+  },[])
+
+  console.log(raffle, "raflle")
 
   const TableCell = withStyles({
     root: {
@@ -194,7 +210,7 @@ const RaffleEndedScreen: FC<IRaffleEndedScreenProps> = ({
           <Grid item xs={12} md={4} lg={4} xl={3}>
             <div className="index-prize"></div>
             <Slider>
-              {[1, 2, 3, 4].map((i) => {
+              {raffle?.prizes?.map((obj, i) => {
                 return (
                   <>
                     <div
@@ -214,295 +230,259 @@ const RaffleEndedScreen: FC<IRaffleEndedScreenProps> = ({
                         width: '100%',
                         padding: '1rem',
                         marginTop: '1rem',
-                        background: 'white',
+                        background: 'none',
                       }}
                     >
-                      <img src={slide} alt="" style={{ width: '100%' }} />
-                    </div>
-                    <div style={{ textAlign: 'justify', color: 'white' }}>
-                      <h2 style={{ textAlign: 'center' }}>Description</h2>
-                      <div>
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry. Lorem Ipsum has been the
-                        industry's standard dummy text ever since the 1500s,
-                        when an unknown printer took a galley of type and
-                        scrambled.
-                      </div>
+                      <img src={obj.meta.imageUri} alt="" style={{ width: '100%' }} />
                     </div>
                   </>
                 );
               })}
             </Slider>
+            <div style={{ textAlign: 'justify', color: 'white' }}>
+                      <h2 style={{ textAlign: 'center' }}>Description</h2>
+                      <div>
+                        {/* Lorem Ipsum is simply dummy text of the printing and
+                        typesetting industry. Lorem Ipsum has been the
+                        industry's standard dummy text ever since the 1500s,
+                        when an unknown printer took a galley of type and
+                        scrambled. */}
+                        {customRaffleData?.description}
+                      </div>
+                    </div>
           </Grid>
-          <Grid item xs={12} md={7} lg={8} xl={8}>
-            <Typography
-              variant="h1"
-              style={{
-                fontFamily: 'Righteous',
-                color: '#81d4f2',
-                marginBottom: '0px',
-                fontSize: '40px',
-                textAlign: 'center',
-              }}
-            >
-              {` ${raffle.metadata.name}`}
-            </Typography>
-            <Grid
-              item
-              xs={12}
-              style={{
-                margin: '0.5rem auto',
-              }}
-            >
-              <SocialMedia />
-            </Grid>
 
-            <Grid item xs={12} lg={8} style={{ width: '100%', margin: 'auto' }}>
-              <table
-                style={{
-                  color: '#81d4f2',
-                  fontFamily: 'Poppins',
-
-                  width: '100',
-                }}
-              >
-                <tr>
-                  <td>
-                    <ConfirmationNumberOutlined
-                      style={{
-                        color: '#81d4f2 ',
-                        fontSize: '50px',
-                      }}
-                    />
-                  </td>
-                  <td className="td-2" style={{ width: '100%' }}>
-                    Sold
-                  </td>
-                  <td style={{ fontSize: '18px', fontWeight: 400 }}>
-                    {raffle.totalTickets}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <MdOutlineMilitaryTech
-                      size="60"
-                      style={{ color: '#81d4f2' }}
-                    />
-                  </td>
-                  <td className="td-2" style={{ width: '100%' }}>
-                    winner
-                    {raffle.prizes.length > 1 && 's'}
-                  </td>
-                  <td style={{ fontSize: '18px', fontWeight: 400 }}>
-                    {raffle.prizes.length}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <img src={valut} alt="" width={70} />
-                  </td>
-                  <td className="td-2" style={{ width: '100%' }}>
-                    Whitelist spots:
-                  </td>
-                  <td style={{ fontSize: '18px', fontWeight: 400 }}>
-                    {raffle.prizes.length}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <img src={reward} alt="" width={50} />
-                  </td>
-                  <td className="td-2" style={{ width: '100%' }}>
-                    Collection Size:
-                  </td>
-                  <td style={{ fontSize: '24px', fontWeight: 400 }}>
-                    {`${raffle.entrantsCap}`}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <img src={price} alt="" width={40} />
-                  </td>
-                  <td className="td-2">Price:</td>
-                  <td style={{ fontSize: '24px', fontWeight: 400 }}>
-                    {getDisplayAmount(
-                      raffle.proceeds.ticketPrice,
-                      raffle.proceeds.mint
-                    )}
-                    {raffle.proceeds.mint.symbol}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <img src={time} alt="" width={40} />
-                  </td>
-                  {/* <td className="td-2">Ends in:</td> */}
-                  <td
-                    // className={classes.raffleSubtitle}
-                    style={{
-                      fontSize: '18px',
-                      fontWeight: 700,
-                      borderRadius: '40px',
-                      border: '2px solid #81d4f2',
-                      padding: '5px 20px',
-                      textAlign: 'center',
-                      // width: '10rem',
-                    }}
-                  >
-                    <div>Raffle closed</div>
-                  </td>
-                </tr>
-              </table>
-            </Grid>
-          </Grid>
-        </Grid>
-      </div>
-      <div className={classes.root}>
-        {/* <Container
-          fixed
-          style={{
-            backgroundColor: 'rgba(0,0,0,0.8)',
-            border: '12px solid #81d4f2',
-            borderRadius: '20px',
-            padding: '50px',
-            marginBottom: '81px',
-          }}
-        >
-          <Grid container style={{ width: 'auto', justifyContent: 'center' }}>
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={6}
-              lg={4}
-              style={{ justifyContent: 'center' }}
-            >
-              <PrizeShowcaseOngoing prizes={raffle.prizes} />
-            </Grid>
-
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={6}
-              lg={8}
-              style={{
-                height: 'max-content',
-                justifyContent: 'space-between',
-              }}
-            >
-              {/* <Typography
-                  component="div"
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    margin: '0 0 10px',
-                  }}
-                >
-                  <div className={classes.middleTitleSection}>
-                    <Typography
-                      variant="h2"
-                      style={{
-                        fontFamily: 'Angkor',
-                        color: '#81d4f2',
-                        marginBottom: '0px',
-                        fontSize: '34px',
-                      }}
-                    >
-                      {` ${raffle.metadata.name}`}
-                    </Typography>
-                  </div>
-                  <div
-                    className={classes.countdown}
-                    style={{ marginTop: '20px' }}
-                  >
-                    <BsStopwatch
-                      size="24"
-                      style={{
-                        marginRight: '8px',
-                        marginTop: '3px',
-                        color: '#81d4f2',
-                      }}
-                    />
-                    <Tooltip
-                      title={raffle.endTimestamp.toString()}
-                      placement="bottom"
-                    >
-                      <Typography
-                        variant="h2"
-                        className={classes.raffleSubtitle}
-                      >
-                        Raffle closed
-                      </Typography>
-                    </Tooltip>
-                  </div>
-                </Typography>
-
+         
+        
+            <>
+              <Grid item xs={12} md={7} lg={8} xl={8}>
                 <Typography
-                  component="div"
+                  variant="h1"
                   style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    margin: '0 0 10px',
+                    fontFamily: 'Righteous',
+                    color: '#81d4f2',
+                    marginBottom: '0px',
+                    fontSize: '40px',
+                    textAlign: 'center',
                   }}
                 >
-                  <div className={classes.middleTitleSection}>
-                    <RaffleInfoSection
-                      raffle={raffle}
-                      userConnected={!!draffleClient.provider.wallet.publicKey}
-                      userTickets={entrant?.tickets}
-                    />
-                  </div>
-                </Typography> */}
+                  {` ${raffle.metadata.name}`}
+                </Typography>
+                <Grid
+                  item
+                  xs={12}
+                  style={{
+                    margin: '0.5rem auto',
+                  }}
+                >
+                  {customRaffleData && 
+                  <SocialMedia customRaffleData={customRaffleData} />
+                  }
+                </Grid>
 
-        {/* {raffle?.randomness ? (
-                <>
-                  {typeof entrant !== 'undefined' ? (
-                    winnerResult[0]?.address ===
-                    entrant.publicKey.toString() ? (
-                      <Typography
-                        variant="h4"
-                        style={{ fontFamily: 'Inter', color: '#81d4f2' }}
-                      >
-                        {' '}
-                        Congratulations, you're the winner
-                      </Typography>
-                    ) : (
-                      <></>
-                    )
-                  ) : (
-                    <></>
-                  )}
-
-                  <TableContainer
+                <Grid
+                  item
+                  xs={12}
+                  lg={8}
+                  style={{ width: '100%', margin: 'auto' }}
+                >
+                  <table
                     style={{
                       color: '#81d4f2',
                       fontFamily: 'Poppins',
-                      fontWeight: 'bold',
-                      marginLeft: '-10px',
+
+                      width: '100',
                     }}
                   >
-                    <Table
-                      style={{
-                        border: '0px',
-                      }}
-                    >
-                      <TableHead style={{ color: '#81d4f2' }}>
+                    <tr>
+                      <td>
+                        <ConfirmationNumberOutlined
+                          style={{
+                            color: '#81d4f2 ',
+                            fontSize: '50px',
+                          }}
+                        />
+                      </td>
+                      <td className="td-2" style={{ width: '100%' }}>
+                        Sold
+                      </td>
+                      <td style={{ fontSize: '18px', fontWeight: 400 }}>
+                        {raffle.totalTickets}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <MdOutlineMilitaryTech
+                          size="60"
+                          style={{ color: '#81d4f2' }}
+                        />
+                      </td>
+                      <td className="td-2" style={{ width: '100%' }}>
+                        winner
+                        {raffle.prizes.length > 1 && 's'}
+                      </td>
+                      <td style={{ fontSize: '18px', fontWeight: 400 }}>
+                        {raffle.prizes.length}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <img src={valut} alt="" width={70} />
+                      </td>
+                      <td className="td-2" style={{ width: '100%' }}>
+                        Whitelist spots:
+                      </td>
+                      <td style={{ fontSize: '18px', fontWeight: 400 }}>
+                        {raffle.prizes.length}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <img src={reward} alt="" width={50} />
+                      </td>
+                      <td className="td-2" style={{ width: '100%' }}>
+                        Collection Size:
+                      </td>
+                      <td style={{ fontSize: '24px', fontWeight: 400 }}>
+                        {`${raffle.entrantsCap}`}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <img src={price} alt="" width={40} />
+                      </td>
+                      <td className="td-2">Price:</td>
+                      <td style={{ fontSize: '24px', fontWeight: 400 }}>
+                        {getDisplayAmount(
+                          raffle.proceeds.ticketPrice,
+                          raffle.proceeds.mint
+                        )}
+                        {raffle.proceeds.mint.symbol}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <img src={time} alt="" width={40} />
+                      </td>
+                      {/* <td className="td-2">Ends in:</td> */}
+                      <td
+                        // className={classes.raffleSubtitle}
+                        style={{
+                          fontSize: '18px',
+                          fontWeight: 700,
+                          borderRadius: '40px',
+                          border: '2px solid #81d4f2',
+                          padding: '5px 20px',
+                          textAlign: 'center',
+                          // width: '10rem',
+                        }}
+                      >
+                        <div>Raffle closed</div>
+                      </td>
+                    </tr>
+                  </table>
+                </Grid>
+              </Grid>
+            </>
+            {raffle?.randomness && (
+            <>
+              {typeof entrant !== 'undefined' ? (
+                winnerResult[0]?.address === entrant.publicKey.toString() ? (
+                  <Typography
+                    variant="h4"
+                    style={{ fontFamily: 'Inter', color: '#81d4f2' }}
+                  >
+                    {' '}
+                    Congratulations, you're the winner
+                  </Typography>
+                ) : (
+                  <></>
+                )
+              ) : (
+                <></>
+              )}
+
+              <TableContainer
+                style={{
+                  color: '#81d4f2',
+                  fontFamily: 'Poppins',
+                  fontWeight: 'bold',
+                  marginLeft: '-10px',
+                }}
+              >
+                <Table
+                  style={{
+                    border: '0px',
+                  }}
+                >
+                  <TableHead style={{ color: '#81d4f2' }}>
+                    <TableRow style={{ border: '0px', color: '#81d4f2' }}>
+                      <TableCell
+                        style={{
+                          color: '#81d4f2',
+                          fontFamily: 'Poppins',
+                        }}
+                      >
+                        <Typography
+                          id="modal-modal-title"
+                          style={{ fontFamily: 'Poppins' }}
+                          variant="h2"
+                        >
+                          Wallet{' '}
+                        </Typography>
+                      </TableCell>
+                      <TableCell
+                        style={{
+                          color: '#81d4f2',
+                          fontFamily: 'Poppins',
+                        }}
+                        align="center"
+                      >
+                        {' '}
+                        <Typography
+                          id="modal-modal-title"
+                          style={{ fontFamily: 'Poppins' }}
+                          variant="h2"
+                        >
+                          Entries
+                        </Typography>
+                      </TableCell>
+                      <TableCell
+                        style={{
+                          color: '#81d4f2',
+                          fontFamily: 'Poppins',
+                        }}
+                        align="center"
+                      >
+                        {' '}
+                        <Typography
+                          id="modal-modal-title"
+                          style={{ fontFamily: 'Poppins' }}
+                          variant="h2"
+                        >
+                          Claim
+                        </Typography>
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody style={{ color: '#81d4f2' }}>
+                    {winnerResult.map((obj: any) => (
+                      <>
                         <TableRow style={{ border: '0px', color: '#81d4f2' }}>
                           <TableCell
-                            style={{
-                              color: '#81d4f2',
-                              fontFamily: 'Poppins',
-                            }}
+                            style={{ color: '#81d4f2' }}
+                            component="th"
+                            scope="row"
                           >
                             <Typography
                               id="modal-modal-title"
                               style={{ fontFamily: 'Poppins' }}
-                              variant="h2"
+                              variant="body1"
                             >
-                              Wallet{' '}
+                              {obj.address}
                             </Typography>
                           </TableCell>
+
                           <TableCell
                             style={{
                               color: '#81d4f2',
@@ -510,165 +490,56 @@ const RaffleEndedScreen: FC<IRaffleEndedScreenProps> = ({
                             }}
                             align="center"
                           >
-                            {' '}
-                            <Typography
-                              id="modal-modal-title"
-                              style={{ fontFamily: 'Poppins' }}
-                              variant="h2"
-                            >
-                              Entries
-                            </Typography>
+                            {obj.prizeNo}
                           </TableCell>
-                          <TableCell
-                            style={{
-                              color: '#81d4f2',
-                              fontFamily: 'Poppins',
-                            }}
-                            align="center"
-                          >
-                            {' '}
-                            <Typography
-                              id="modal-modal-title"
-                              style={{ fontFamily: 'Poppins' }}
-                              variant="h2"
-                            >
-                              Claim
-                            </Typography>
+                          <TableCell align="center">
+                            <PrizeGalleryEnded
+                              raffle={raffle}
+                              prizeNo={obj.prizeNo}
+                              entrantWinningTickets={entrantWinningTickets}
+                              winningTickets={winningTickets}
+                              claimPrize={claimPrize}
+                              scrollRef={prizeGalleryRef}
+                            />
                           </TableCell>
+
+                          <br />
                         </TableRow>
-                      </TableHead>
-                      <TableBody style={{ color: '#81d4f2' }}>
-                        {winnerResult.map((obj: any) => (
-                          <>
-                            <TableRow
-                              style={{ border: '0px', color: '#81d4f2' }}
-                            >
-                              <TableCell
-                                style={{ color: '#81d4f2' }}
-                                component="th"
-                                scope="row"
-                              >
-                                <Typography
-                                  id="modal-modal-title"
-                                  style={{ fontFamily: 'Poppins' }}
-                                  variant="body1"
-                                >
-                                  {obj.address}
-                                </Typography>
-                              </TableCell>
+                      </>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </> )}
+        
 
-                              <TableCell
-                                style={{
-                                  color: '#81d4f2',
-                                  fontFamily: 'Poppins',
-                                }}
-                                align="center"
-                              >
-                                {obj.prizeNo}
-                              </TableCell>
-                              <TableCell align="center">
-                                <PrizeGalleryEnded
-                                  raffle={raffle}
-                                  prizeNo={obj.prizeNo}
-                                  entrantWinningTickets={entrantWinningTickets}
-                                  winningTickets={winningTickets}
-                                  claimPrize={claimPrize}
-                                  scrollRef={prizeGalleryRef}
-                                />
-                              </TableCell>
-
-                              {/* <hr /> */}
-        {/* <br />
-                            </TableRow>
-                          </>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                </>
-              ) : ( 
-                // <>
-                //   <Typography
-                //     component="div"
-                //     style={{
-                //       backgroundColor: 'black',
-                //       fontFamily: 'Poppins',
-                //       borderRadius: '20px',
-                //       padding: '20px',
-                //       display: 'flex',
-                //       alignItems: 'center',
-                //       justifyContent: 'space-around',
-                //       width: '70%',
-                //       margin: '0 0 10px',
-                //     }}
-                //   >
-                //     <Typography
-                //       variant="body2"
-                //       style={{ fontFamily: 'Poppins', color: '#81d4f2' }}
-                //     >
-                //       <span style={{ fontSize: 'large' }}>Whitelist spots</span>
-                //       <br />
-                //       <span style={{ fontSize: '22px', fontWeight: 'bolder' }}>
-                //         {raffle.prizes.length}
-                //       </span>
-                //     </Typography>
-                //     <Typography
-                //       variant="body2"
-                //       style={{ fontFamily: 'Poppins', color: '#81d4f2' }}
-                //     >
-                //       <span style={{ fontSize: 'large' }}>Collection Size</span>
-                //       <br />
-                //       <span
-                //         style={{ fontSize: '22px', fontWeight: 'bolder' }}
-                //       >{`${raffle.entrantsCap}`}</span>
-                //     </Typography>
-                //     <Typography
-                //       variant="body2"
-                //       style={{ fontFamily: 'Poppins', color: '#81d4f2' }}
-                //     >
-                //       <span style={{ fontSize: 'large' }}>Price</span>
-                //       <br />
-                //       <span style={{ fontSize: '22px', fontWeight: 'bolder' }}>
-                //         {getDisplayAmount(
-                //           raffle.proceeds.ticketPrice,
-                //           raffle.proceeds.mint
-                //         )}
-                //         {raffle.proceeds.mint.symbol}
-                //       </span>
-                //     </Typography>
-                //   </Typography>
-                // </>
-              // )}
-            </Grid>
-          </Grid>
-        </Container>
-              */}
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h2">
-              Winners:
-            </Typography>
-            {winnerResult.map((obj: any) => (
-              <>
-                <Typography id="modal-modal-title" variant="h4">
-                  Prize No: {obj.prizeNo}
-                </Typography>
-                <Typography id="modal-modal-title" variant="body1">
-                  address: {obj.address}
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <Typography id="modal-modal-title" variant="h2">
+                Winners:
+              </Typography>
+              {winnerResult.map((obj: any) => (
+                <>
+                  <Typography id="modal-modal-title" variant="h4">
+                    Prize No: {obj.prizeNo}
+                  </Typography>
+                  <Typography id="modal-modal-title" variant="body1">
+                    address: {obj.address}
+                    <br />
+                    ticket No: {1 + obj.winnerOfTick}
+                  </Typography>
+                  <hr />
                   <br />
-                  ticket No: {1 + obj.winnerOfTick}
-                </Typography>
-                <hr />
-                <br />
-              </>
-            ))}
-          </Box>
-        </Modal>
+                </>
+              ))}
+            </Box>
+          </Modal>
+        </Grid>
       </div>
     </>
   );

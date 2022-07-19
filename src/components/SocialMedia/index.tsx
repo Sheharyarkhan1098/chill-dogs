@@ -1,9 +1,10 @@
+import { FC } from "react";
 import { BsTwitter } from 'react-icons/bs';
 import { FaDiscord, FaSearch } from 'react-icons/fa';
 import { TbWorld } from 'react-icons/tb';
 import Grid from '@mui/material/Grid';
 import magicicon from '../../assets/magiceden.svg';
-const index = () => {
+const index: FC <any> = ({customRaffleData}) => {
   return (
     <>
       <Grid
@@ -23,7 +24,7 @@ const index = () => {
             // padding: 'auto 2rem',
           }}
         >
-          <a href="#">
+          <a href={customRaffleData.magicLink}>
             <img
               src={magicicon}
               alt="icon"
@@ -38,7 +39,7 @@ const index = () => {
               }}
             />
           </a>
-          <a href="#">
+          <a href={customRaffleData.discordLink}>
             <FaDiscord
               style={{
                 color: 'white',
@@ -51,7 +52,7 @@ const index = () => {
               }}
             />
           </a>
-          <a href="#">
+          <a href={customRaffleData.twitterLink}>
             <BsTwitter
               style={{
                 color: 'white',
@@ -64,7 +65,7 @@ const index = () => {
               }}
             />
           </a>
-          <a href="#">
+          <a href={customRaffleData.websiteLink}>
             <TbWorld
               style={{
                 color: '#18c0ee',
