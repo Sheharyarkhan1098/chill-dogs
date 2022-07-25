@@ -19,6 +19,10 @@ body {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 } */
+.text-field:focus{
+  border: none !important;
+  outline: none !important;
+}
 .socailmedia {
   width: 100%;
 }
