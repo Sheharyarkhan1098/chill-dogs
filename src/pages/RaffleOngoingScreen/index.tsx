@@ -66,9 +66,9 @@ const RaffleOngoingScreen: FC<IRaffleOngoingScreenProps> = ({
   useEffect(() => {
     const getRaffles = async () =>  {
       const data = await axios.get(`${base_url}/get-Raffles`);
-      console.log(data.data);
+      console.log(data.data, "allData");
       let currntRaffle = data.data.filter((obj: any) => obj[0] === raffle.publicKey.toString())
-      console.log(currntRaffle[0][1]);
+      console.log(currntRaffle[0][1], "customRaffle");
       setCustomRaffleData(currntRaffle[0][1]);
     }
     getRaffles();
@@ -78,18 +78,11 @@ const RaffleOngoingScreen: FC<IRaffleOngoingScreenProps> = ({
   if (!raffle) return null;
 
   // const [num, setNum] = useState('');
-
+  console.log(raffle, "raffle")
   return (
     <>
       <div
         className="main"
-        style={{
-          backgroundColor: 'rgba(0,0,0,0.8)',
-          border: '12px solid #81d4f2',
-          borderRadius: '20px',
-          marginBottom: '200px',
-          padding: '1rem',
-        }}
       >
         <Grid container spacing={1}>
           <Grid item xs={12} md={4} lg={4} xl={3}>
@@ -104,7 +97,6 @@ const RaffleOngoingScreen: FC<IRaffleOngoingScreenProps> = ({
                         color: '#000',
                         zIndex: '2',
                         fontWeight: '900',
-                        fontSize: '2.5rem',
                         textAlign: 'center',
                       }}
                     >
@@ -118,13 +110,13 @@ const RaffleOngoingScreen: FC<IRaffleOngoingScreenProps> = ({
                         background: 'none',
                       }}
                     >
-                      <img src={obj.meta.imageUri} alt="" style={{ width: '100%' }} />
+                      <img src={obj.meta.imageUri} alt="" style={{width: '100%'}} />
                     </div>
                   </>
                 );
               })}
             </Slider>
-               <div style={{ textAlign: 'justify', color: 'white' }}>
+               <div className='description' style={{ textAlign: 'justify', color: 'white' }}>
                       <h2 style={{ textAlign: 'center' }}>Description</h2>
                       <div>
                         {/* Lorem Ipsum is simply dummy text of the printing and
@@ -139,11 +131,11 @@ const RaffleOngoingScreen: FC<IRaffleOngoingScreenProps> = ({
           <Grid item xs={12} md={7} lg={8} xl={8}>
             <Typography
               variant="h1"
+              className="name-title"
               style={{
-                fontFamily: 'Righteous',
+                fontFamily: 'Rubik Wet Paint',
                 color: '#81d4f2',
                 marginBottom: '0px',
-                fontSize: '40px',
                 textAlign: 'center',
               }}
             >
@@ -165,70 +157,60 @@ const RaffleOngoingScreen: FC<IRaffleOngoingScreenProps> = ({
               <table
                 style={{
                   color: '#81d4f2',
-                  fontFamily: 'Poppins',
-
                   width: '100',
                 }}
               >
                 <tr>
                   <td>
-                    <ConfirmationNumberOutlined
+                    {/* <ConfirmationNumberOutlined className="sold-icon"
                       style={{
                         color: '#81d4f2 ',
-                        fontSize: '50px',
                       }}
-                    />
+                    /> */}
+                      <img src={valut} alt="" 
+                         className="whitelist-icon" />
                   </td>
                   <td className="td-2" style={{ width: '100%' }}>
-                    Sold
+                    {/* Sold */}
+                    Total Entries:
                   </td>
-                  <td style={{ fontSize: '18px', fontWeight: 400 }}>
-                    {raffle.totalTickets}
+                  <td >
+                    {raffle.totalTickets} / {raffle.entrantsCap}
                   </td>
                 </tr>
-                <tr>
+                {/* <tr>
                   <td>
-                    <MdOutlineMilitaryTech
-                      size="60"
-                      style={{ color: '#81d4f2' }}
-                    />
+                  <MdOutlineMilitaryTech className='winner-icon'
+                          style={{ color: '#81d4f2' }}
+                        />
                   </td>
                   <td className="td-2" style={{ width: '100%' }}>
                     winner
-                    {raffle.prizes.length > 1 && 's'}
+                    {raffle.prizes.length > 1 && 's'}:
                   </td>
-                  <td style={{ fontSize: '18px', fontWeight: 400 }}>
+                  <td >
                     {raffle.prizes.length}
                   </td>
-                </tr>
+                </tr> */}
                 <tr>
                   <td>
-                    <img src={valut} alt="" width={70} />
+                  <img src={valut} alt="" 
+                         className="whitelist-icon" />
                   </td>
                   <td className="td-2" style={{ width: '100%' }}>
-                    Whitelist spots:
+                    {/* Whitelist spots: */}
+                    My Ticket:
                   </td>
-                  <td style={{ fontSize: '18px', fontWeight: 400 }}>
-                    {raffle.prizes.length}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <img src={reward} alt="" width={50} />
-                  </td>
-                  <td className="td-2" style={{ width: '100%' }}>
-                    Collection Size:
-                  </td>
-                  <td style={{ fontSize: '24px', fontWeight: 400 }}>
-                    {`${raffle.entrantsCap}`}
+                  <td >
+                    {entrant?.tickets?.length || 0}
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    <img src={price} alt="" width={40} />
+                  <img src={price} alt="" className='price-icon' />
                   </td>
                   <td className="td-2">Price:</td>
-                  <td style={{ fontSize: '24px', fontWeight: 400 }}>
+                  <td >
                     {getDisplayAmount(
                       raffle.proceeds.ticketPrice,
                       raffle.proceeds.mint
@@ -238,20 +220,28 @@ const RaffleOngoingScreen: FC<IRaffleOngoingScreenProps> = ({
                 </tr>
                 <tr>
                   <td>
-                    <img src={time} alt="" width={40} />
+                  <img src={reward} alt="" 
+                         className="reward-icon"/>
                   </td>
-                  <td className="td-2">Ends in:</td>
-                  <td style={{ fontSize: '30px', fontWeight: 700 }}>
+                  <td className="td-2" style={{ width: '100%' }}>
+                    {/* Collection Size: */}
+                    Result:
+                  </td>
+                  <td>
+                    {/* {`${raffle.entrantsCap}`} */}
+                      {'Will be revealed'}
+                  </td>
+                </tr>
+               
+                <tr>
+                  <td>
+                  <img src={time} alt=""  className="time-icon" />
+                  </td>
+                  <td className="td-2 end-text">Ends in:</td>
+                  <td >
                     <div className={classes.countdown}>
-                      {/* <BsStopwatch
-                        size="24"
-                        style={{
-                          marginRight: '8px',
-                          color: '#81d4f2',
-                        }}
-                      /> */}
                       <Countdown
-                        style={{ fontSize: '18px' }}
+                        style={{ fontSize: '18px',fontFamily: 'Rubik Wet Paint', }}
                         endTimestamp={raffle.endTimestamp}
                       />
                     </div>
@@ -263,7 +253,7 @@ const RaffleOngoingScreen: FC<IRaffleOngoingScreenProps> = ({
               item
               xs={12}
               lg={8}
-              style={{ width: '100%', margin: '2.5rem  auto' }}
+              style={{ width: '100%', margin: '1.5rem  auto auto'  }}
             >
               <table
                 // className="btn-table"
@@ -282,32 +272,46 @@ const RaffleOngoingScreen: FC<IRaffleOngoingScreenProps> = ({
                   </>
                 ) : (
                   <>
-                    <tr>
-                      <td
-                        style={{
-                          fontSize: '20px',
-                          fontWeight: 700,
-                          width: '100%',
-                          padding: 'auto 1rem',
-                        }}
-                      >
+                    <tr className="desktop-connect">
+                      <td>
                         Tickets are still available.
                       </td>
-                      <td>
+                      <td className='clock-btn' >
                         <WalletMultiButton
                           style={{
-                            textAlign: 'center',
-                            width: '15rem',
-                            margin: 'auto',
+                           background: 'none',
+                           fontFamily: 'Rubik Wet Paint',
+
                           }}
                           variant="contained"
                           color="secondary"
-                          className={` ${classes.connectToBuyButton}`}
+                          // className={` ${classes.connectToBuyButton}`}
                         >
                           Connect to buy
                         </WalletMultiButton>
                       </td>
                     </tr>
+                    <div className='mobile-connect'>
+                      <div>
+                      Tickets are still available.
+                      </div>
+
+                          <div  className='clock-btn' style={{ marginTop: "1rem",}} >
+                          <WalletMultiButton
+                          style={{
+                           background: 'none',
+                           fontFamily: 'Rubik Wet Paint',
+                          
+
+                          }}
+                          variant="contained"
+                          color="secondary"
+                          // className={` ${classes.connectToBuyButton}`}
+                        >
+                          Connect to buy
+                        </WalletMultiButton>
+                          </div>
+                    </div>
                   </>
                 )}
               </table>

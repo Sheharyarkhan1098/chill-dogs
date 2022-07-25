@@ -198,16 +198,9 @@ const RaffleEndedScreen: FC<IRaffleEndedScreenProps> = ({
     <>
       <div
         className="main"
-        style={{
-          backgroundColor: 'rgba(0,0,0,0.8)',
-          border: '12px solid #81d4f2',
-          borderRadius: '20px',
-          marginBottom: '200px',
-          padding: '1rem',
-        }}
       >
         <Grid container spacing={1}>
-          <Grid item xs={12} md={4} lg={4} xl={3}>
+          <Grid item xs={12} sm={12} md={4} lg={4} xl={3}>
             <div className="index-prize"></div>
             <Slider>
               {raffle?.prizes?.map((obj, i) => {
@@ -219,7 +212,6 @@ const RaffleEndedScreen: FC<IRaffleEndedScreenProps> = ({
                         color: '#000',
                         zIndex: '2',
                         fontWeight: '900',
-                        fontSize: '2.5rem',
                         textAlign: 'center',
                       }}
                     >
@@ -239,7 +231,7 @@ const RaffleEndedScreen: FC<IRaffleEndedScreenProps> = ({
                 );
               })}
             </Slider>
-            <div style={{ textAlign: 'justify', color: 'white' }}>
+            <div className='description' style={{ textAlign: 'justify', color: 'white' }}>
                       <h2 style={{ textAlign: 'center' }}>Description</h2>
                       <div>
                         {/* Lorem Ipsum is simply dummy text of the printing and
@@ -250,19 +242,16 @@ const RaffleEndedScreen: FC<IRaffleEndedScreenProps> = ({
                         {customRaffleData?.description}
                       </div>
                     </div>
-          </Grid>
-
-         
-        
+          </Grid>       
             <>
-              <Grid item xs={12} md={7} lg={8} xl={8}>
+              <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
                 <Typography
                   variant="h1"
+                  className="name-title"
                   style={{
-                    fontFamily: 'Righteous',
+                    fontFamily: 'Rubik Wet Paint',
                     color: '#81d4f2',
                     marginBottom: '0px',
-                    fontSize: '40px',
                     textAlign: 'center',
                   }}
                 >
@@ -289,93 +278,87 @@ const RaffleEndedScreen: FC<IRaffleEndedScreenProps> = ({
                   <table
                     style={{
                       color: '#81d4f2',
-                      fontFamily: 'Poppins',
-
                       width: '100',
                     }}
                   >
-                    <tr>
-                      <td>
-                        <ConfirmationNumberOutlined
-                          style={{
-                            color: '#81d4f2 ',
-                            fontSize: '50px',
-                          }}
-                        />
-                      </td>
-                      <td className="td-2" style={{ width: '100%' }}>
-                        Sold
-                      </td>
-                      <td style={{ fontSize: '18px', fontWeight: 400 }}>
-                        {raffle.totalTickets}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <MdOutlineMilitaryTech
-                          size="60"
+                        <tr>
+                  <td>
+                    {/* <ConfirmationNumberOutlined className="sold-icon"
+                      style={{
+                        color: '#81d4f2 ',
+                      }}
+                    /> */}
+                      <img src={valut} alt="" 
+                         className="whitelist-icon" />
+                  </td>
+                  <td className="td-2" style={{ width: '100%' }}>
+                    {/* Sold */}
+                    Total Entries:
+                  </td>
+                  <td  style={{ width: '100%' }} >
+                  {raffle.totalTickets} / {raffle.entrantsCap}
+                  </td>
+                </tr>
+                {/* <tr>
+                  <td>
+                  <MdOutlineMilitaryTech className='winner-icon'
                           style={{ color: '#81d4f2' }}
                         />
-                      </td>
-                      <td className="td-2" style={{ width: '100%' }}>
-                        winner
-                        {raffle.prizes.length > 1 && 's'}
-                      </td>
-                      <td style={{ fontSize: '18px', fontWeight: 400 }}>
-                        {raffle.prizes.length}
-                      </td>
-                    </tr>
+                  </td>
+                  <td className="td-2" style={{ width: '100%' }}>
+                    winner
+                    {raffle.prizes.length > 1 && 's'}:
+                  </td>
+                  <td >
+                    {raffle.prizes.length}
+                  </td>
+                </tr> */}
+                <tr>
+                  <td>
+                  <img src={valut} alt="" 
+                         className="whitelist-icon" />
+                  </td>
+                  <td className="td-2" style={{ width: '100%' }}>
+                    {/* Whitelist spots: */}
+                    My Ticket:
+                  </td>
+                  <td >
+                  {entrant?.tickets?.length || 0}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                  <img src={price} alt="" className='price-icon' />
+                  </td>
+                  <td className="td-2">Price:</td>
+                  <td >
+                    {getDisplayAmount(
+                      raffle.proceeds.ticketPrice,
+                      raffle.proceeds.mint
+                    )}
+                    {raffle.proceeds.mint.symbol}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                  <img src={reward} alt="" 
+                         className="reward-icon"/>
+                  </td>
+                  <td className="td-2" style={{ width: '100%' }}>
+                    {/* Collection Size: */}
+                    Result:
+                  </td>
+                  <td>
+                    {/* {`${raffle.entrantsCap}`} */}
+                    {!raffle?.randomness ? "Will be revealed" : "Check the results below" }
+                  </td>
+                </tr>
                     <tr>
                       <td>
-                        <img src={valut} alt="" width={70} />
+                        <img src={time} alt=""  className="time-icon" />
                       </td>
-                      <td className="td-2" style={{ width: '100%' }}>
-                        Whitelist spots:
-                      </td>
-                      <td style={{ fontSize: '18px', fontWeight: 400 }}>
-                        {raffle.prizes.length}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <img src={reward} alt="" width={50} />
-                      </td>
-                      <td className="td-2" style={{ width: '100%' }}>
-                        Collection Size:
-                      </td>
-                      <td style={{ fontSize: '24px', fontWeight: 400 }}>
-                        {`${raffle.entrantsCap}`}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <img src={price} alt="" width={40} />
-                      </td>
-                      <td className="td-2">Price:</td>
-                      <td style={{ fontSize: '24px', fontWeight: 400 }}>
-                        {getDisplayAmount(
-                          raffle.proceeds.ticketPrice,
-                          raffle.proceeds.mint
-                        )}
-                        {raffle.proceeds.mint.symbol}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <img src={time} alt="" width={40} />
-                      </td>
-                      {/* <td className="td-2">Ends in:</td> */}
                       <td
-                        // className={classes.raffleSubtitle}
-                        style={{
-                          fontSize: '18px',
-                          fontWeight: 700,
-                          borderRadius: '40px',
-                          border: '2px solid #81d4f2',
-                          padding: '5px 20px',
-                          textAlign: 'center',
-                          // width: '10rem',
-                        }}
+                      className='clock-btn'                      
                       >
                         <div>Raffle closed</div>
                       </td>
@@ -392,7 +375,6 @@ const RaffleEndedScreen: FC<IRaffleEndedScreenProps> = ({
                     variant="h4"
                     style={{ fontFamily: 'Inter', color: '#81d4f2' }}
                   >
-                    {' '}
                     Congratulations, you're the winner
                   </Typography>
                 ) : (

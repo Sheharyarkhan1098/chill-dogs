@@ -4,6 +4,7 @@ import { FaDiscord, FaSearch } from 'react-icons/fa';
 import { TbWorld } from 'react-icons/tb';
 import Grid from '@mui/material/Grid';
 import magicicon from '../../assets/magiceden.svg';
+import solscan from "../../assets/solscan.png"
 const index: FC <any> = ({customRaffleData}) => {
   return (
     <>
@@ -18,21 +19,18 @@ const index: FC <any> = ({customRaffleData}) => {
           className="socailmedia"
           style={{
             margin: 'auto',
-            // width: "50%",
             display: 'flex',
             justifyContent: 'center',
-            // padding: 'auto 2rem',
           }}
         >
           <a href={customRaffleData.magicLink}>
             <img
               src={magicicon}
               alt="icon"
+              className="magic-icon"
               style={{
                 background: '#140c19',
                 borderRadius: '50%',
-                width: '70px',
-                height: '70px',
                 padding: '6px 5px',
                 boxSizing: 'border-box',
                 margin: 'auto 0.5rem',
@@ -41,11 +39,10 @@ const index: FC <any> = ({customRaffleData}) => {
           </a>
           <a href={customRaffleData.discordLink}>
             <FaDiscord
+            className="react-icons"
               style={{
                 color: 'white',
                 padding: '5px',
-                width: '60px',
-                height: '60px',
                 borderRadius: '50%',
                 background: '#5565fb',
                 margin: 'auto 0.5rem',
@@ -54,11 +51,10 @@ const index: FC <any> = ({customRaffleData}) => {
           </a>
           <a href={customRaffleData.twitterLink}>
             <BsTwitter
+            className="react-icons"
               style={{
                 color: 'white',
                 padding: '5px',
-                width: '60px',
-                height: '60px',
                 borderRadius: '50%',
                 background: '#05a3f9',
                 margin: 'auto 0.5rem',
@@ -67,31 +63,29 @@ const index: FC <any> = ({customRaffleData}) => {
           </a>
           <a href={customRaffleData.websiteLink}>
             <TbWorld
+            className="react-icons"
               style={{
                 color: '#18c0ee',
-                width: '60px',
-                height: '60px',
                 borderRadius: '50%',
                 background: '#fff',
                 margin: 'auto 0.5rem',
               }}
             />
           </a>
-          {/* <a href="#">
-            <FaSearch
+          <a href={customRaffleData.websiteLink}>
+          <img
+              src={solscan}
+              alt="icon"
+              className="magic-icon"
               style={{
-                color: 'black',
-                // margin: '3px auto auto 5px',
-                padding: '1rem auto auto 1rem',
-                width: '60px',
-                height: '60px',
+                background: 'none',
                 borderRadius: '50%',
-                border: '10px solid #09ecb2',
-                background: '#d73ee9',
-                                margin: 'auto 0.5rem's
+                padding: '10px',
+                boxSizing: 'border-box',
+                margin: '-6px auto auto',
               }}
             />
-          </a> */}
+          </a>
         </div>
       </Grid>
     </>

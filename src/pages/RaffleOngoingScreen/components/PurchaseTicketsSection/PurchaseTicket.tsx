@@ -12,12 +12,13 @@ import {
   MenuItem,
   Select,
   TextField,
-  Typography, Grid
+  Typography,
+  Grid,
 } from '@material-ui/core';
 import { sleep } from '@project-serum/common';
 import { u64 } from '@solana/spl-token';
 import toast from 'react-hot-toast';
-import { BsPlus, BsDash } from "react-icons/bs";
+import { BsPlus, BsDash } from 'react-icons/bs';
 import {
   AddBoxRounded,
   AddCircleOutline,
@@ -46,7 +47,6 @@ import { DispenserRegistryRaw } from '../../../../providers/ProgramApisProvider'
 import { PublicKey } from '@solana/web3.js';
 import ShortenedString from '../../../../components/ShortenedString';
 import useMediaQuery from '@mui/material/useMediaQuery';
-
 
 const MAX_TICKET_AMOUNT = 1000;
 
@@ -111,7 +111,7 @@ export const PurchaseTickets: FC<PurchaseTicketsProps> = ({
           const dispenser = dispensers.find(
             (d) =>
               d.account.mintTokenOut.toString() ===
-              raffle.proceeds.mint.publicKey.toString() &&
+                raffle.proceeds.mint.publicKey.toString() &&
               d.account.mintTokenIn.toString() === mintAddress.toString()
           );
           if (!dispenser) {
@@ -216,9 +216,9 @@ export const PurchaseTickets: FC<PurchaseTicketsProps> = ({
   const buyerTokenBalance = useMemo(() => {
     return paymentOption.mint.publicKey.toBase58() === wrappedSOL
       ? {
-        mint: new PublicKey(wrappedSOL),
-        amount: new u64(walletLamports ?? 0),
-      } // We ignore the potential wSOL ATA
+          mint: new PublicKey(wrappedSOL),
+          amount: new u64(walletLamports ?? 0),
+        } // We ignore the potential wSOL ATA
       : buyerATABalance;
   }, [walletLamports, buyerATABalance, paymentOption.mint.publicKey]);
 
@@ -238,7 +238,7 @@ export const PurchaseTickets: FC<PurchaseTicketsProps> = ({
 
     if (
       paymentOption.mint.publicKey.toString() ===
-      buyerTokenBalance.mint.toString() &&
+        buyerTokenBalance.mint.toString() &&
       newMax.ltn(ticketAmount)
     )
       setTicketAmount(newMax.toNumber());
@@ -310,77 +310,88 @@ export const PurchaseTickets: FC<PurchaseTicketsProps> = ({
         <Typography variant="overline">Amount</Typography>
       </div> */}
 
-
-      {matches ?
-
-
-        <Grid container direction="row" justifyContent="space-between" style={{display:"block"}} >
-          <span style={{justifyContent:'center',display:'flex'}}>
-          <Grid item xs={6} sm={6} md={2} lg={2} style={{ height: 'max-content',justifyContent:'center', display: 'flex',marginBottom:'20px', borderRadius: '20px', border: '1px solid #C7C7C7' }}>
-            <div className={classes.ticketAmountSectionLeft}>
-              <IconButton
-                size="small"
-                onClick={() =>
-                  setTicketAmount((currentAmount) => Math.max(currentAmount - 1, 1))
-                }
-                disabled={ticketAmount <= 1}
-              // className={classes.changeTicketAmountButton}
-              >
-                <BsDash style={{ fontSize: 30 }} />
-              </IconButton>
-            </div>
-
-            <TextField
-              size="small"
-              variant="outlined"
-              className={classes.ticketAmountTextField}
-              value={ticketAmount}
-              onChange={(event) => {
-                const newValue = event.target.value;
-                const re = /^[0-9\b]+$/;
-                if (newValue !== '' && !re.test(newValue)) return;
-
-                let numericValue = Math.min(
-                  Math.min(
-                    Number(newValue),
-                    MAX_TICKET_AMOUNT - raffle.totalTickets
-                  ),
-                  maxTicketsToBuyable.toNumber()
-                );
-
-                setTicketAmount(numericValue);
+      {matches ? (
+        <Grid
+          container
+          direction="row"
+          justifyContent="space-between"
+          style={{ display: 'block' }}
+        >
+          <span style={{ justifyContent: 'center', display: 'flex' }}>
+            <Grid
+              item
+              xs={6}
+              sm={6}
+              md={2}
+              lg={2}
+              style={{
+                height: 'max-content',
+                justifyContent: 'center',
+                display: 'flex',
+                marginBottom: '20px',
+                borderRadius: '20px',
+                border: '1px solid #C7C7C7',
               }}
+            >
+              <div className={classes.ticketAmountSectionLeft}>
+                <IconButton
+                  size="small"
+                  onClick={() =>
+                    setTicketAmount((currentAmount) =>
+                      Math.max(currentAmount - 1, 1)
+                    )
+                  }
+                  disabled={ticketAmount <= 1}
+                  className={classes.changeTicketAmountButton}
+                >
+                  <BsDash style={{ fontSize: 30 }} />
+                </IconButton>
+              </div>
 
-            />
-
-
-
-            <div className={classes.ticketAmountSectionRight}>
-              <IconButton
+              <TextField
                 size="small"
-                onClick={() =>
-                  setTicketAmount((currentAmount) => currentAmount + 1)
-                }
-                disabled={
-                  raffle.totalTickets + ticketAmount >=
-                  MAX_NUMBER_OF_PARTICIPANTS ||
-                  !hasEnoughFundsToIncrementTicket ||
-                  ticketAmount + 1 > MAX_TICKET_AMOUNT - raffle.totalTickets
-                }
-                className={classes.changeTicketAmountButton}
-              >
-                <BsPlus style={{ fontSize: 30 }} />
-              </IconButton>
-            </div>
+                variant="outlined"
+                className={classes.ticketAmountTextField}
+                value={ticketAmount}
+                onChange={(event) => {
+                  const newValue = event.target.value;
+                  const re = /^[0-9\b]+$/;
+                  if (newValue !== '' && !re.test(newValue)) return;
 
+                  let numericValue = Math.min(
+                    Math.min(
+                      Number(newValue),
+                      MAX_TICKET_AMOUNT - raffle.totalTickets
+                    ),
+                    maxTicketsToBuyable.toNumber()
+                  );
 
-          </Grid>
+                  setTicketAmount(numericValue);
+                }}
+              />
+
+              <div className={classes.ticketAmountSectionRight}>
+                <IconButton
+                  size="small"
+                  onClick={() =>
+                    setTicketAmount((currentAmount) => currentAmount + 1)
+                  }
+                  disabled={
+                    raffle.totalTickets + ticketAmount >=
+                      MAX_NUMBER_OF_PARTICIPANTS ||
+                    !hasEnoughFundsToIncrementTicket ||
+                    ticketAmount + 1 > MAX_TICKET_AMOUNT - raffle.totalTickets
+                  }
+                  className={classes.changeTicketAmountButton}
+                >
+                  <BsPlus style={{ fontSize: 30 }} />
+                </IconButton>
+              </div>
+            </Grid>
           </span>
-          <Grid item md={8} lg={6}>
+          <Grid item md={8} lg={6}></Grid>
 
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={2} lg={4}  >
+          <Grid item xs={12} sm={6} md={2} lg={4}>
             <div className={classes.buySection}>
               <Button
                 variant="contained"
@@ -388,13 +399,25 @@ export const PurchaseTickets: FC<PurchaseTicketsProps> = ({
                 onClick={onBuyTickets}
                 disabled={
                   ticketAmount === 0 ||
-                  raffle.totalTickets + ticketAmount > MAX_NUMBER_OF_PARTICIPANTS ||
+                  raffle.totalTickets + ticketAmount >
+                    MAX_NUMBER_OF_PARTICIPANTS ||
                   !hasEnoughFunds ||
                   purchaseOngoing
                 }
-                style={{ width: '100%', float: 'right', fontWeight: 'bolder', borderRadius: '25px', fontFamily: 'Poppins', minHeight: '50px',background: "#D39ADD"}}
+                style={{
+                  width: '100%',
+                  float: 'right',
+                  fontWeight: 'bolder',
+                  borderRadius: '25px',
+                  fontFamily: 'Poppins',
+                  minHeight: '50px',
+                  background: '#D39ADD',
+                }}
               >
-                <div className={classes.purchaseButtonContent} style={{ fontFamily: 'Inter' }}>
+                <div
+                  className={classes.purchaseButtonContent}
+                  style={{ fontFamily: 'Inter' }}
+                >
                   {purchaseOngoing ? (
                     <>
                       <div className={classes.purchaseButtonContentLeft}>
@@ -411,18 +434,44 @@ export const PurchaseTickets: FC<PurchaseTicketsProps> = ({
                   ) : (
                     <>
                       <div>
-
-                        {(ticketAmount === 0 ||
-                          raffle.totalTickets + ticketAmount > MAX_NUMBER_OF_PARTICIPANTS ||
-                          !hasEnoughFunds ||
-                          purchaseOngoing) ? <>
-                          <span  style={{ padding: "10px 25px", whiteSpace: 'nowrap', background: "#D39ADD", width: '100%', borderRadius: '30px', color:'white'}}> Buy Ticket's </span>
-                          {/* {!lamportsEnough && '(Insufficient SOL)'} */}
-                          <br />
-                          {/* <p style={{ padding: '10px', fontSize: '10px', border: "2px solid green", borderRadius: '20px',marginTop:'20px' }}>You'd need at least 0.015 + {getDisplayAmount(raffle.proceeds.ticketPrice, raffle.proceeds.mint)} {raffle.proceeds.mint.symbol} in order to buy the ticket</p> */}
-                        </>
-                          :
-                          <span style={{ padding: "10px 25px", whiteSpace: 'nowrap', background: "#D39ADD", width: '100%', borderRadius: '30px', color:'white', }}> Buy Ticket's </span>}
+                        {ticketAmount === 0 ||
+                        raffle.totalTickets + ticketAmount >
+                          MAX_NUMBER_OF_PARTICIPANTS ||
+                        !hasEnoughFunds ||
+                        purchaseOngoing ? (
+                          <>
+                            <span
+                              style={{
+                                padding: '10px 25px',
+                                whiteSpace: 'nowrap',
+                                background: '#D39ADD',
+                                width: '100%',
+                                borderRadius: '30px',
+                                color: 'white',
+                              }}
+                            >
+                              {' '}
+                              Buy Ticket's{' '}
+                            </span>
+                            {/* {!lamportsEnough && '(Insufficient SOL)'} */}
+                            <br />
+                            {/* <p style={{ padding: '10px', fontSize: '10px', border: "2px solid green", borderRadius: '20px',marginTop:'20px' }}>You'd need at least 0.015 + {getDisplayAmount(raffle.proceeds.ticketPrice, raffle.proceeds.mint)} {raffle.proceeds.mint.symbol} in order to buy the ticket</p> */}
+                          </>
+                        ) : (
+                          <span
+                            style={{
+                              padding: '10px 25px',
+                              whiteSpace: 'nowrap',
+                              background: '#D39ADD',
+                              width: '100%',
+                              borderRadius: '30px',
+                              color: 'white',
+                            }}
+                          >
+                            {' '}
+                            Buy Ticket's{' '}
+                          </span>
+                        )}
                       </div>
                     </>
                   )}
@@ -440,22 +489,71 @@ export const PurchaseTickets: FC<PurchaseTicketsProps> = ({
             </div> */}
             </div>
           </Grid>
-          <p style={{ marginLeft:'30px', padding: '10px', fontSize: '16px',color:"#FFF", background:'#000000',width: '80%', borderRadius: '20px',marginTop:'40%' }}>You'd need at least 0.015 + {getDisplayAmount(raffle.proceeds.ticketPrice, raffle.proceeds.mint)} {raffle.proceeds.mint.symbol} in order to buy the ticket</p>
+          <p
+            style={{
+              marginLeft: '30px',
+              padding: '10px',
+              fontSize: '16px',
+              color: '#FFF',
+              background: '#000000',
+              width: '80%',
+              borderRadius: '20px',
+              marginTop: '40%',
+            }}
+          >
+            You'd need at least 0.015 +{' '}
+            {getDisplayAmount(
+              raffle.proceeds.ticketPrice,
+              raffle.proceeds.mint
+            )}{' '}
+            {raffle.proceeds.mint.symbol} in order to buy the ticket
+          </p>
         </Grid>
-        :
+      ) : (
 
-
-
-        <Grid container direction="row" justifyContent="space-between" alignItems="flex-start" >
-          <Grid item xs={4} sm={4} md={4} lg={2} style={{ height: 'max-content', display: 'flex', borderRadius: '20px',  background: "black", border:'none'}}>
+        <Grid
+          container
+          direction="row"
+          justifyContent="space-between"
+          alignItems="flex-start"
+        >
+          {/* <input type="number" id="myNumber" value="0" /> */}
+         {/* <TextField
+         style={{
+           background:"none", border:"none",outline:"none"
+         }}
+          id="filled-number"
+          // label="Number"
+          type="number"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          variant="filled"
+        /> */}
+          <Grid
+            item
+            xs={4}
+            sm={4}
+            md={4}
+            lg={4}
+            style={{
+              height: 'max-content',
+              display: 'flex',
+              borderRadius: '20px',
+              background: 'black',
+              border: 'none',
+            }}
+          >
             <div className={classes.ticketAmountSectionLeft}>
               <IconButton
                 size="small"
                 onClick={() =>
-                  setTicketAmount((currentAmount) => Math.max(currentAmount - 1, 1))
+                  setTicketAmount((currentAmount) =>
+                    Math.max(currentAmount - 1, 1)
+                  )
                 }
                 disabled={ticketAmount <= 1}
-              // className={classes.changeTicketAmountButton}
+                className={classes.changeTicketAmountButton}
               >
                 <BsDash style={{ fontSize: 30 }} />
               </IconButton>
@@ -481,10 +579,7 @@ export const PurchaseTickets: FC<PurchaseTicketsProps> = ({
 
                 setTicketAmount(numericValue);
               }}
-
             />
-
-
 
             <div className={classes.ticketAmountSectionRight}>
               <IconButton
@@ -494,7 +589,7 @@ export const PurchaseTickets: FC<PurchaseTicketsProps> = ({
                 }
                 disabled={
                   raffle.totalTickets + ticketAmount >=
-                  MAX_NUMBER_OF_PARTICIPANTS ||
+                    MAX_NUMBER_OF_PARTICIPANTS ||
                   !hasEnoughFundsToIncrementTicket ||
                   ticketAmount + 1 > MAX_TICKET_AMOUNT - raffle.totalTickets
                 }
@@ -503,15 +598,10 @@ export const PurchaseTickets: FC<PurchaseTicketsProps> = ({
                 <BsPlus style={{ fontSize: 30 }} />
               </IconButton>
             </div>
-
-
           </Grid>
 
-          <Grid item xs={4} sm={4} md={6} lg={5}>
 
-          </Grid>
-
-          <Grid item xs={4} sm={4} md={2} lg={4} >
+          <Grid item xs={4} sm={4} md={2} lg={4}>
             <div className={classes.buySection}>
               <Button
                 variant="contained"
@@ -519,13 +609,25 @@ export const PurchaseTickets: FC<PurchaseTicketsProps> = ({
                 onClick={onBuyTickets}
                 disabled={
                   ticketAmount === 0 ||
-                  raffle.totalTickets + ticketAmount > MAX_NUMBER_OF_PARTICIPANTS ||
+                  raffle.totalTickets + ticketAmount >
+                    MAX_NUMBER_OF_PARTICIPANTS ||
                   !hasEnoughFunds ||
                   purchaseOngoing
                 }
-                style={{ width: '100%', float: 'right', fontWeight: 'bolder', borderRadius: '25px', fontFamily: 'Poppins', minHeight: '50px',background: "none"}}
+                style={{
+                  width: '100%',
+                  float: 'right',
+                  fontWeight: 'bolder',
+                  borderRadius: '25px',
+                  fontFamily: 'Poppins',
+                  minHeight: '50px',
+                  background: 'none',
+                }}
               >
-                <div className={classes.purchaseButtonContent} style={{ fontFamily: 'Inter' }}>
+                <div
+                  className={classes.purchaseButtonContent}
+                  style={{ fontFamily: 'Inter' }}
+                >
                   {purchaseOngoing ? (
                     <>
                       <div className={classes.purchaseButtonContentLeft}>
@@ -542,24 +644,51 @@ export const PurchaseTickets: FC<PurchaseTicketsProps> = ({
                   ) : (
                     <>
                       <div>
-
-                        {(ticketAmount === 0 ||
-                          raffle.totalTickets + ticketAmount > MAX_NUMBER_OF_PARTICIPANTS ||
-                          !hasEnoughFunds ||
-                          purchaseOngoing) ? <>
-                          <span style={{ padding: "10px 25px", whiteSpace: 'nowrap', background: "none", color: "white", border: "1px solid white", width: '100%', borderRadius: '30px' }}> Buy Ticket's </span>
-                          {/* {!lamportsEnough && '(Insufficient SOL)'} */}
-                          <br />
-                          
-                        </>
-                          :
-                          <span style={{ padding: "10px 25px", whiteSpace: 'nowrap', background: "none", color: "white", border: "1px solid white", width: '100%', borderRadius: '30px' }}> Buy Ticket's </span>}
+                        {ticketAmount === 0 ||
+                        raffle.totalTickets + ticketAmount >
+                          MAX_NUMBER_OF_PARTICIPANTS ||
+                        !hasEnoughFunds ||
+                        purchaseOngoing ? (
+                          <>
+                            <span
+                              style={{
+                                padding: '10px 25px',
+                                whiteSpace: 'nowrap',
+                                background: 'none',
+                                color: 'white',
+                                border: '1px solid white',
+                                width: '100%',
+                                borderRadius: '30px',
+                              }}
+                            >
+                              {' '}
+                              Buy Ticket's{' '}
+                            </span>
+                            {/* {!lamportsEnough && '(Insufficient SOL)'} */}
+                            <br />
+                          </>
+                        ) : (
+                          <span
+                            style={{
+                              padding: '10px 25px',
+                              whiteSpace: 'nowrap',
+                              background: 'none',
+                              color: 'white',
+                              border: '1px solid white',
+                              width: '100%',
+                              borderRadius: '30px',
+                            }}
+                          >
+                            {' '}
+                            Buy Ticket's{' '}
+                          </span>
+                        )}
                       </div>
                     </>
                   )}
                 </div>
               </Button>
-              
+
               {/* <div className={classes.walletBalance}>
               Wallet balance:{' '}
               {buyerTokenBalance
@@ -571,12 +700,28 @@ export const PurchaseTickets: FC<PurchaseTicketsProps> = ({
               {paymentOption.mint.symbol}
             </div> */}
             </div>
-            
-              
           </Grid>
-          <p style={{ marginLeft:'250px', padding: '10px', fontSize: '16px',color:"#FFF", background:'#000000',width: '60%', borderRadius: '20px',marginTop:'37px' }}>You'd need at least 0.015 + {getDisplayAmount(raffle.proceeds.ticketPrice, raffle.proceeds.mint)} {raffle.proceeds.mint.symbol} in order to buy the ticket</p>
-        </Grid>}
-
+          <p
+            style={{
+              marginLeft: '250px',
+              padding: '10px',
+              fontSize: '16px',
+              color: '#FFF',
+              background: '#000000',
+              width: '60%',
+              borderRadius: '20px',
+              marginTop: '37px',
+            }}
+          >
+            You'd need at least 0.015 +{' '}
+            {getDisplayAmount(
+              raffle.proceeds.ticketPrice,
+              raffle.proceeds.mint
+            )}{' '}
+            {raffle.proceeds.mint.symbol} in order to buy the ticket
+          </p>
+        </Grid>
+      )}
 
       {/* <div className={classes.ticketAmountSection}  style={{borderRadius:'15px',border:'1px solid #C7C7C7'}}>
         <div className={classes.ticketAmountSectionLeft}>
@@ -644,7 +789,6 @@ export const PurchaseTickets: FC<PurchaseTicketsProps> = ({
             }}
           /> 
           </div>*/}
-
 
       {/* <TextField
           size="small"

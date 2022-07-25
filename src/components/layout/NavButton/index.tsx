@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Button, ButtonProps } from '@material-ui/core';
 import { useHistory } from 'react-router';
 import { ButtonGroup, Stack } from '@mui/material';
@@ -22,14 +22,22 @@ const NavButton: FC<NavButtonProps> = ({
    className,
   ...otherProps
 }) => {
+  const [font, setFont] = useState('2rem')
+useEffect(()=>{
+  if( window.innerWidth < 541){
+    setFont('2rem')
+  }else {
+    setFont('5rem')
+  }
+}, [])
   const classes = useStyles({ isCurrent });
   const { push } = useHistory();
 
   return (
     <>
       <Stack justifyContent="center" >
-        <ButtonGroup>
-          <Button 
+        <ButtonGroup >
+          <Button  style={{fontSize: font}}
             onClick={(event) => {
               if(label === "Auction"){
                 return
@@ -43,6 +51,7 @@ const NavButton: FC<NavButtonProps> = ({
             disableRipple
             size={size}
             className={`${classes.navButtons}`}
+            // className="title"
             {...otherProps}
           >
             {label}

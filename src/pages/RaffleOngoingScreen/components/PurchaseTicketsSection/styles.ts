@@ -34,14 +34,15 @@ export const useStyles = makeStyles((theme: Theme) => ({
     backgroundColor:'#D39ADD',
   },
   ticketAmountSectionMiddle: {
-    width: '30%',
+    width: '300px',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    border:'none'
+    border:'none',
+    padding:  '2rem'
   },
   ticketAmountSectionRight: {
-    //width: '15%',
+    // width: '100px',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-end',
