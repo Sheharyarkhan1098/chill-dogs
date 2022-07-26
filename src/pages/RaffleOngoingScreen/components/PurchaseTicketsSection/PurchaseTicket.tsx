@@ -335,16 +335,16 @@ export const PurchaseTickets: FC<PurchaseTicketsProps> = ({
               lg={2}
         style={{display: "flex", alignItems: "center"}}
             >
-          <input type="number" id="myNumber" value={loanAmount}  style={{width: "3rem", height: "1.5rem"}} />
+          <input type="number" id="myNumber" value={ticketAmount}  style={{width: "3rem", height: "1.5rem"}} />
 
                         <div style={{width: "100%"}}> 
           <Slider
             min={0}
             max={100}
-            value={loanAmount}
+            value={ticketAmount}
             onChangeStart={handleChangeStart}
             onChange={(value) => {
-            setLoanAmount(value);
+            setTicketAmount(value);
             }}
             onChangeComplete={handleChangeComplete}
                         />
@@ -563,7 +563,7 @@ export const PurchaseTickets: FC<PurchaseTicketsProps> = ({
               border: 'none',
             }}
           >
-          <input type="number" id="myNumber" value={loanAmount}  style={{width: "3rem", height: "1.5rem", marginRight: '10px'}} />
+          <input type="number" id="myNumber" value={ticketAmount}  style={{width: "3rem", height: "1.5rem", marginRight: '10px'}} />
           {/* <input type="range" 
         min={0}
         max={100}
@@ -578,10 +578,10 @@ export const PurchaseTickets: FC<PurchaseTicketsProps> = ({
           <Slider
             min={0}
             max={100}
-            value={loanAmount}
+            value={ticketAmount}
             onChangeStart={handleChangeStart}
             onChange={(value) => {
-            setLoanAmount(value);
+            setTicketAmount(value);
             }}
             onChangeComplete={handleChangeComplete}
                         />
