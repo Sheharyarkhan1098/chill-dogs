@@ -19,6 +19,8 @@ import { sleep } from '@project-serum/common';
 import { u64 } from '@solana/spl-token';
 import toast from 'react-hot-toast';
 import { BsPlus, BsDash } from 'react-icons/bs';
+import Slider from "react-rangeslider";
+import 'react-rangeslider/lib/index.css'
 import {
   AddBoxRounded,
   AddCircleOutline,
@@ -69,7 +71,8 @@ export const PurchaseTickets: FC<PurchaseTicketsProps> = ({
 }) => {
   const classes = { ...useCommonStyles(), ...useStyles() };
   const { draffleClient, dispenserClient } = useProgramApis();
-
+  const [loanAmount, setLoanAmount] = useState(0);
+  const [personalAmount, setPersonalAmount] = useState(0);
   const [purchaseOngoing, setPurchaseOngoing] = useState(false);
   const [walletLamports, setWalletLamports] = useState<number>();
   // const [ticketPrice, setTicketPrice] = useState<PaymentOption>({
@@ -300,7 +303,13 @@ export const PurchaseTickets: FC<PurchaseTicketsProps> = ({
       value: unknown;
     }>
   ) => setPaymentOption(paymentOptions.get(event.target.value as string)!);
+  const handleChangeStart = () => {
+    console.log("Change event started");
+  };
 
+  const handleChangeComplete = () => {
+    console.log("Change event completed");
+  };
   return (
     <div style={{ justifyContent: 'space-between', flex: 'row' }}>
       {/* <Typography variant="h3" className={classes.titleSection}>
@@ -320,20 +329,27 @@ export const PurchaseTickets: FC<PurchaseTicketsProps> = ({
           <span style={{ justifyContent: 'center', display: 'flex' }}>
             <Grid
               item
-              xs={6}
+              xs={12}
               sm={6}
               md={2}
               lg={2}
-              style={{
-                height: 'max-content',
-                justifyContent: 'center',
-                display: 'flex',
-                marginBottom: '20px',
-                borderRadius: '20px',
-                border: '1px solid #C7C7C7',
-              }}
+        style={{display: "flex", alignItems: "center"}}
             >
-              <div className={classes.ticketAmountSectionLeft}>
+          <input type="number" id="myNumber" value={loanAmount}  style={{width: "3rem", height: "1.5rem"}} />
+
+                        <div style={{width: "100%"}}> 
+          <Slider
+            min={0}
+            max={100}
+            value={loanAmount}
+            onChangeStart={handleChangeStart}
+            onChange={(value) => {
+            setLoanAmount(value);
+            }}
+            onChangeComplete={handleChangeComplete}
+                        />
+          </div>
+              {/* <div className={classes.ticketAmountSectionLeft}>
                 <IconButton
                   size="small"
                   onClick={() =>
@@ -386,10 +402,9 @@ export const PurchaseTickets: FC<PurchaseTicketsProps> = ({
                 >
                   <BsPlus style={{ fontSize: 30 }} />
                 </IconButton>
-              </div>
+              </div> */}
             </Grid>
           </span>
-          <Grid item md={8} lg={6}></Grid>
 
           <Grid item xs={12} sm={6} md={2} lg={4}>
             <div className={classes.buySection}>
@@ -489,7 +504,7 @@ export const PurchaseTickets: FC<PurchaseTicketsProps> = ({
             </div> */}
             </div>
           </Grid>
-          <p
+          {/* <p
             style={{
               marginLeft: '30px',
               padding: '10px',
@@ -507,7 +522,7 @@ export const PurchaseTickets: FC<PurchaseTicketsProps> = ({
               raffle.proceeds.mint
             )}{' '}
             {raffle.proceeds.mint.symbol} in order to buy the ticket
-          </p>
+          </p> */}
         </Grid>
       ) : (
 
@@ -517,14 +532,17 @@ export const PurchaseTickets: FC<PurchaseTicketsProps> = ({
           justifyContent="space-between"
           alignItems="flex-start"
         >
-          {/* <input type="number" id="myNumber" value="0" /> */}
-         {/* <TextField
+      
+          {/* <input type="number" id="myNumber" value={loanAmount} /> */}
+         {/* <TextField  className={classes.ticketAmountTextField}
          style={{
-           background:"none", border:"none",outline:"none"
+           background:"none", border:"none",outline:"none", padding: "none",width: "3rem"
+
          }}
           id="filled-number"
           // label="Number"
           type="number"
+          value={loanAmount}
           InputLabelProps={{
             shrink: true,
           }}
@@ -532,19 +550,45 @@ export const PurchaseTickets: FC<PurchaseTicketsProps> = ({
         /> */}
           <Grid
             item
-            xs={4}
+            xs={12}
             sm={4}
-            md={4}
-            lg={4}
+            md={8}
+            lg={8}
             style={{
-              height: 'max-content',
+              // height: 'max-content',
               display: 'flex',
+              alignItems: "center",
               borderRadius: '20px',
-              background: 'black',
+              // background: 'black',
               border: 'none',
             }}
           >
-            <div className={classes.ticketAmountSectionLeft}>
+          <input type="number" id="myNumber" value={loanAmount}  style={{width: "3rem", height: "1.5rem", marginRight: '10px'}} />
+          {/* <input type="range" 
+        min={0}
+        max={100}
+        value={loanAmount}
+        //  onChangeStart={handleChangeStart}
+        //  onChange={(e) => {
+        //  setLoanAmount(e);
+         }}
+        //  onChangeComplete={handleChangeComplete}
+          /> */}
+          <div style={{width: "100%"}}> 
+          <Slider
+            min={0}
+            max={100}
+            value={loanAmount}
+            onChangeStart={handleChangeStart}
+            onChange={(value) => {
+            setLoanAmount(value);
+            }}
+            onChangeComplete={handleChangeComplete}
+                        />
+          </div>
+          
+       
+            {/* <div className={classes.ticketAmountSectionLeft}>
               <IconButton
                 size="small"
                 onClick={() =>
@@ -557,13 +601,13 @@ export const PurchaseTickets: FC<PurchaseTicketsProps> = ({
               >
                 <BsDash style={{ fontSize: 30 }} />
               </IconButton>
-            </div>
+            </div> */}
 
-            <TextField
+            {/* <TextField style={{background: "red"}}
               size="small"
               variant="outlined"
               className={classes.ticketAmountTextField}
-              value={ticketAmount}
+              value={loanAmount}
               onChange={(event) => {
                 const newValue = event.target.value;
                 const re = /^[0-9\b]+$/;
@@ -579,9 +623,9 @@ export const PurchaseTickets: FC<PurchaseTicketsProps> = ({
 
                 setTicketAmount(numericValue);
               }}
-            />
+            /> */}
 
-            <div className={classes.ticketAmountSectionRight}>
+            {/* <div className={classes.ticketAmountSectionRight}>
               <IconButton
                 size="small"
                 onClick={() =>
@@ -597,7 +641,7 @@ export const PurchaseTickets: FC<PurchaseTicketsProps> = ({
               >
                 <BsPlus style={{ fontSize: 30 }} />
               </IconButton>
-            </div>
+            </div> */}
           </Grid>
 
 
@@ -701,7 +745,7 @@ export const PurchaseTickets: FC<PurchaseTicketsProps> = ({
             </div> */}
             </div>
           </Grid>
-          <p
+          {/* <p
             style={{
               marginLeft: '250px',
               padding: '10px',
@@ -719,7 +763,7 @@ export const PurchaseTickets: FC<PurchaseTicketsProps> = ({
               raffle.proceeds.mint
             )}{' '}
             {raffle.proceeds.mint.symbol} in order to buy the ticket
-          </p>
+          </p> */}
         </Grid>
       )}
 
