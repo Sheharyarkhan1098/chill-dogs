@@ -229,7 +229,7 @@ const RaffleOngoingScreen: FC<IRaffleOngoingScreenProps> = ({
                   </td>
                   <td>
                     {/* {`${raffle.entrantsCap}`} */}
-                      {'Will be revealed'}
+                      {'N/A or Congrats'}
                   </td>
                 </tr>
                

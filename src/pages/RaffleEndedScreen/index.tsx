@@ -69,6 +69,7 @@ const RaffleEndedScreen: FC<IRaffleEndedScreenProps> = ({
   const [open, setOpen] = useState(false);
   const [customRaffleData, setCustomRaffleData] = useState<any>({});
   const [winnerResult, setWinnerResult] = useState<any>([]);
+  const [isWinner, setIsWinner] = useState<Boolean>(false)
   const handleOpen = () => setOpen(false);
   const handleClose = () => setOpen(true);
   const style = {
@@ -350,7 +351,7 @@ const RaffleEndedScreen: FC<IRaffleEndedScreenProps> = ({
                   </td>
                   <td>
                     {/* {`${raffle.entrantsCap}`} */}
-                    {!raffle?.randomness ? "Will be revealed" : "Check the results below" }
+                    {!isWinner ? "...N/A..." : "Congrats" }
                   </td>
                 </tr>
                     <tr>
@@ -375,7 +376,7 @@ const RaffleEndedScreen: FC<IRaffleEndedScreenProps> = ({
                     variant="h4"
                     style={{ fontFamily: 'Inter', color: '#81d4f2' }}
                   >
-                    Congratulations, you're the winner
+                    {/* Congratulations, you're the winner */}
                   </Typography>
                 ) : (
                   <></>
@@ -481,6 +482,7 @@ const RaffleEndedScreen: FC<IRaffleEndedScreenProps> = ({
                               entrantWinningTickets={entrantWinningTickets}
                               winningTickets={winningTickets}
                               claimPrize={claimPrize}
+                              setIsWinner={setIsWinner}
                               scrollRef={prizeGalleryRef}
                             />
                           </TableCell>
