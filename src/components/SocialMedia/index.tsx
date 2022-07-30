@@ -76,7 +76,7 @@ const index: FC <any> = ({customRaffleData}) => {
           <img
               src={solscan}
               alt="icon"
-              className="magic-icon"
+              className="solscan-icon"
               style={{
                 background: 'none',
                 borderRadius: '50%',
