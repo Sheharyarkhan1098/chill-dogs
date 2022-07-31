@@ -321,8 +321,8 @@ const RaffleEndedScreen: FC<IRaffleEndedScreenProps> = ({
                   <td className="td-2" style={{ width: '100%' }}>
                     {/* Collection Size: */}
                     Result:
-                  </td>
-                  <td>
+                  
+                  
                     {/* {`${raffle.entrantsCap}`} */}
                     <span className='span-12'>
                     {!isWinner ? "...N/A..." : "Congrats" }
