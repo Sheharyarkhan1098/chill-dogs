@@ -105,8 +105,7 @@ const RaffleOngoingScreen: FC<IRaffleOngoingScreenProps> = ({
                     <div
                       style={{
                         width: '100%',
-                        padding: '1rem',
-                        marginTop: '1rem',
+                        paddingLeft: '2rem ',
                         background: 'none',
                       }}
                     >
@@ -162,61 +161,35 @@ const RaffleOngoingScreen: FC<IRaffleOngoingScreenProps> = ({
               >
                 <tr>
                   <td>
-                    {/* <ConfirmationNumberOutlined className="sold-icon"
-                      style={{
-                        color: '#81d4f2 ',
-                      }}
-                    /> */}
                       <img src={valut} alt="" 
-                         className="whitelist-icon" />
+                         className="my-ticket-icon" />
                   </td>
                   <td className="td-2" style={{ width: '100%' }}>
                     {/* Sold */}
-                    Total Entries:
+                    Total Entries: <span className="span-12">{raffle.totalTickets} / {raffle.entrantsCap}</span>
                   </td>
-                  <td >
-                    {raffle.totalTickets} / {raffle.entrantsCap}
-                  </td>
+                  
                 </tr>
-                {/* <tr>
-                  <td>
-                  <MdOutlineMilitaryTech className='winner-icon'
-                          style={{ color: '#81d4f2' }}
-                        />
-                  </td>
-                  <td className="td-2" style={{ width: '100%' }}>
-                    winner
-                    {raffle.prizes.length > 1 && 's'}:
-                  </td>
-                  <td >
-                    {raffle.prizes.length}
-                  </td>
-                </tr> */}
+                
                 <tr>
                   <td>
                   <img src={valut} alt="" 
-                         className="whitelist-icon" />
+                         className="my-ticket-icon" />
                   </td>
                   <td className="td-2" style={{ width: '100%' }}>
                     {/* Whitelist spots: */}
-                    My Ticket:
-                  </td>
-                  <td >
-                    {entrant?.tickets?.length || 0}
+                    My Ticket: <span className="span-12">{entrant?.tickets?.length || 0}</span>
                   </td>
                 </tr>
                 <tr>
                   <td>
                   <img src={price} alt="" className='price-icon' />
                   </td>
-                  <td className="td-2">Price:</td>
-                  <td >
-                    {getDisplayAmount(
+                  <td className="td-2">Price: <span className="span-12">{getDisplayAmount(
                       raffle.proceeds.ticketPrice,
                       raffle.proceeds.mint
                     )}
-                    {raffle.proceeds.mint.symbol}
-                  </td>
+                    {raffle.proceeds.mint.symbol}</span></td>
                 </tr>
                 <tr>
                   <td>
@@ -225,27 +198,26 @@ const RaffleOngoingScreen: FC<IRaffleOngoingScreenProps> = ({
                   </td>
                   <td className="td-2" style={{ width: '100%' }}>
                     {/* Collection Size: */}
+
+              
+
                     Result:
                   </td>
                   <td>
                     {/* {`${raffle.entrantsCap}`} */}
+                     <span className="span-12">
                       {'N/A or Congrats'}
+   </span>
                   </td>
-                </tr>
-               
+                </tr>               
                 <tr>
                   <td>
                   <img src={time} alt=""  className="time-icon" />
                   </td>
-                  <td className="td-2 end-text">Ends in:</td>
-                  <td >
-                    <div className={classes.countdown}>
-                      <Countdown
-                        style={{ fontSize: '18px',fontFamily: 'Rubik Wet Paint', }}
+                  <td className="td-2 end-text" style={{display: 'flex'}}>Ends in: <span className="span-12"><Countdown
+                        style={{ fontSize: '18px',  fontFamily: "'Ceviche One', cursive", width:"10rem" }}
                         endTimestamp={raffle.endTimestamp}
-                      />
-                    </div>
-                  </td>
+                      /></span></td> 
                 </tr>
               </table>
             </Grid>
@@ -280,7 +252,7 @@ const RaffleOngoingScreen: FC<IRaffleOngoingScreenProps> = ({
                         <WalletMultiButton
                           style={{
                            background: 'none',
-                           fontFamily: 'Rubik Wet Paint',
+                            fontFamily: "'Ceviche One', cursive" 
 
                           }}
                           variant="contained"
@@ -300,7 +272,7 @@ const RaffleOngoingScreen: FC<IRaffleOngoingScreenProps> = ({
                           <WalletMultiButton
                           style={{
                            background: 'none',
-                           fontFamily: 'Rubik Wet Paint',
+                            fontFamily: "'Ceviche One', cursive" 
                           
 
                           }}

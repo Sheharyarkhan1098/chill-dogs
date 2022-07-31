@@ -221,8 +221,7 @@ const RaffleEndedScreen: FC<IRaffleEndedScreenProps> = ({
                     <div
                       style={{
                         width: '100%',
-                        padding: '1rem',
-                        marginTop: '1rem',
+                        paddingLeft: '2rem ',
                         background: 'none',
                       }}
                     >
@@ -280,65 +279,39 @@ const RaffleEndedScreen: FC<IRaffleEndedScreenProps> = ({
                     style={{
                       color: '#81d4f2',
                       width: '100',
+                      lineHeight: '50px'
                     }}
                   >
-                        <tr>
+                  <tr>
                   <td>
-                    {/* <ConfirmationNumberOutlined className="sold-icon"
-                      style={{
-                        color: '#81d4f2 ',
-                      }}
-                    /> */}
                       <img src={valut} alt="" 
-                         className="whitelist-icon" />
+                         className="my-ticket-icon" />
                   </td>
                   <td className="td-2" style={{ width: '100%' }}>
                     {/* Sold */}
-                    Total Entries:
-                  </td>
-                  <td  style={{ width: '100%' }} >
-                  {raffle.totalTickets} / {raffle.entrantsCap}
+                    Total Entries: <span className='span-12'>{raffle.totalTickets} / {raffle.entrantsCap}</span>
                   </td>
                 </tr>
-                {/* <tr>
-                  <td>
-                  <MdOutlineMilitaryTech className='winner-icon'
-                          style={{ color: '#81d4f2' }}
-                        />
-                  </td>
-                  <td className="td-2" style={{ width: '100%' }}>
-                    winner
-                    {raffle.prizes.length > 1 && 's'}:
-                  </td>
-                  <td >
-                    {raffle.prizes.length}
-                  </td>
-                </tr> */}
+        
                 <tr>
                   <td>
                   <img src={valut} alt="" 
-                         className="whitelist-icon" />
+                         className="my-ticket-icon" />
                   </td>
                   <td className="td-2" style={{ width: '100%' }}>
-                    {/* Whitelist spots: */}
-                    My Ticket:
-                  </td>
-                  <td >
-                  {entrant?.tickets?.length || 0}
+                
+                    My Ticket: <span className='span-12'>{entrant?.tickets?.length || 0}</span>
                   </td>
                 </tr>
                 <tr>
                   <td>
                   <img src={price} alt="" className='price-icon' />
                   </td>
-                  <td className="td-2">Price:</td>
-                  <td >
-                    {getDisplayAmount(
+                  <td className="td-2">Price: <span className='span-12'>{getDisplayAmount(
                       raffle.proceeds.ticketPrice,
                       raffle.proceeds.mint
                     )}
-                    {raffle.proceeds.mint.symbol}
-                  </td>
+                    {raffle.proceeds.mint.symbol}</span></td>
                 </tr>
                 <tr>
                   <td>
@@ -351,17 +324,21 @@ const RaffleEndedScreen: FC<IRaffleEndedScreenProps> = ({
                   </td>
                   <td>
                     {/* {`${raffle.entrantsCap}`} */}
+                    <span className='span-12'>
                     {!isWinner ? "...N/A..." : "Congrats" }
+                    </span>
+
                   </td>
+                 
                 </tr>
                     <tr>
                       <td>
-                        <img src={time} alt=""  className="time-icon" />
+                        <img src={time} alt=""  className="time-icon"  />
                       </td>
-                      <td
-                      className='clock-btn'                      
+                      <td className="td-2"
+                      // className='clock-btn'                      
                       >
-                        <div>Raffle closed</div>
+                      End Time: <span className='span-12'>Raffle closed</span>
                       </td>
                     </tr>
                   </table>
