@@ -37,7 +37,7 @@ const ClaimButton: FC<ClaimButtonProps> = ({
         }}
         disabled={prize.amount.isZero() || !!claimOngoing.get(prizeIndex)}
         className={classes.mainButton}
-        style={{ background: "#D39ADD",border:'none'}}
+        style={{ background: "white",borderRadius: 30}}
       >
         <div className={classes.claimButtonContent}>
           {!!claimOngoing.get(prizeIndex) ? (

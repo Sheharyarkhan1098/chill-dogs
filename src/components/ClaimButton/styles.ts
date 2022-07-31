@@ -12,7 +12,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    background: "#D39ADD"
+    background: "white",
+    color: "black"
   },
   claimButtonContentLeft: {
     width: '20%',

@@ -198,10 +198,16 @@ const RaffleOngoingScreen: FC<IRaffleOngoingScreenProps> = ({
                   </td>
                   <td className="td-2" style={{ width: '100%' }}>
                     {/* Collection Size: */}
-                    Result: <span className="span-12">
-                      {/* {`${raffle.entrantsCap}`} */}
-                    {'Will be revealed'}
-                    </span>
+
+              
+
+                    Result:
+                  </td>
+                  <td>
+                    {/* {`${raffle.entrantsCap}`} */}
+                     <span className="span-12">
+                      {'N/A or Congrats'}
+   </span>
                   </td>
                 </tr>               
                 <tr>

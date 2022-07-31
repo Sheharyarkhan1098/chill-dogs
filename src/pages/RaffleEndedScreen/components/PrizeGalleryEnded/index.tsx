@@ -14,6 +14,7 @@ interface PrizeGalleryEndedProps {
   entrantWinningTickets: { prizeIndex: number; ticketIndex: number }[];
   winningTickets: number[];
   prizeNo: string;
+  setIsWinner: any;
   claimPrize: (prizeIndex: number, ticketIndex: number) => Promise<void>;
   scrollRef: RefObject<HTMLDivElement>;
 }
@@ -22,6 +23,7 @@ const PrizeGalleryEnded: FC<PrizeGalleryEndedProps> = ({
   raffle,
   entrantWinningTickets,
   winningTickets,
+  setIsWinner,
   claimPrize,
   scrollRef,
   prizeNo,
@@ -63,6 +65,7 @@ const PrizeGalleryEnded: FC<PrizeGalleryEndedProps> = ({
               {parseInt(prizeNo) === prizeIndex + 1 ? 
               <>{isWon && (
                 <div className={classes.claimButtonContainer}>
+                  {setIsWinner(true)}
                   <ClaimButton
                     claimPrize={claimPrize}
                     prize={prize}
