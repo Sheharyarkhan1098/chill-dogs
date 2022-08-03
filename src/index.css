@@ -69,6 +69,7 @@ table {
   position: absolute;
 }
 .prize-tag {
+  font-family: 'Ceviche One', cursive;
   font-size: 1.5rem;
   line-height: 50px;
 }
