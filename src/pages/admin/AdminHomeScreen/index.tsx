@@ -115,8 +115,8 @@ const AdminHomeScreen: FC = () => {
   // constanst_config
 
   const PROGRAM_ID = "EKKrfGqarrKykjBfsDoetezDXtuzMoYGb4rvtd629oms";
-  // const CLUSTER = "mainnet";
-  const CLUSTER = "devnet";
+  const CLUSTER = "mainnet";
+  // const CLUSTER = "devnet";
 
 
   // const base_url = "http://localhost:8000";

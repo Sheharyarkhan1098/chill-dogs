@@ -189,6 +189,7 @@ const RaffleOngoingScreen: FC<IRaffleOngoingScreenProps> = ({
                       raffle.proceeds.ticketPrice,
                       raffle.proceeds.mint
                     )}
+                    {" "}
                     {raffle.proceeds.mint.symbol}</span></td>
                 </tr>
                 <tr>

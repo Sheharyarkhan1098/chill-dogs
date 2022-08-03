@@ -73,7 +73,7 @@ const tokenRegistry = {
     address: 'TYPSYLNf84cqtv4uCHtMBnXkYWPCMdhE9BAgCvLEu5m',
     symbol: 'TIPSY',
     name: 'TIPSY',
-    decimals: 6,
+    decimals: 9,
     logoURI: '/resources/chill_logo.png',
     tags: [],
   },
