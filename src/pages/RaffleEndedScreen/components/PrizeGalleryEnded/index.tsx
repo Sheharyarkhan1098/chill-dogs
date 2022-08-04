@@ -53,6 +53,8 @@ const PrizeGalleryEnded: FC<PrizeGalleryEndedProps> = ({
           );
 
           return (
+            <>
+            {parseInt(prizeNo) === prizeIndex + 1 && 
             <Grid key={prizeIndex} item className={classes.prizeItem}>
               {/* <PrizeCardEnded
                 key={prizeIndex}
@@ -62,7 +64,7 @@ const PrizeGalleryEnded: FC<PrizeGalleryEndedProps> = ({
                 index={prizeIndex}
                 winner={ticketIndex}
               /> */}
-              {parseInt(prizeNo) === prizeIndex + 1 ? 
+             
               <>{isWon && (
                 <div className={classes.claimButtonContainer}>
                   {setIsWinner(true)}
@@ -74,9 +76,9 @@ const PrizeGalleryEnded: FC<PrizeGalleryEndedProps> = ({
                     
                   />
                 </div>
-              )}</> : <></>
-              }
-            </Grid>
+              )}</>
+              </Grid>
+            }</>
           );
         })}
       </Grid>
