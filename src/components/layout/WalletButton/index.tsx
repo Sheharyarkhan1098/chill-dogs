@@ -70,7 +70,7 @@ const  WalletButton = () => {
               <Button sx={{display: {xs: "flex"}, margin: {xs: "auto", sm: 0} }}>
                         <WalletMultiButton  
                         
-                        style={{border: '1px solid white', borderRadius: '5px', color:'white',background:'transparent', fontSize: 20, padding: "10px 20px", textShadow: '4px 2px 4px rgba(0, 0, 0, 0.8)'}}
+                        style={{border: '3px solid #000', borderRadius: '5px', color:'#fff',background:'black', fontSize: 20, padding: "10px 20px", textShadow: '4px 2px 4px rgba(0, 0, 0, 0.8)', cursor: 'pointer'}}
                         />
                 </Button>
   
