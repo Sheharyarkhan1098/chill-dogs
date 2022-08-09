@@ -52,6 +52,8 @@ import time from '../../assets/19.png';
 import reward from '../../assets/reward.png';
 import price from '../../assets/price.png';
 import axios from "axios";
+import Countdown from '../../components/Countdown';
+
 
 interface IRaffleEndedScreenProps {
   raffle: Raffle;
@@ -233,14 +235,14 @@ const RaffleEndedScreen: FC<IRaffleEndedScreenProps> = ({
             </Slider>
             <div className='description' style={{ textAlign: 'justify', color: 'white' }}>
                       <h2 style={{ textAlign: 'center' }}>Description</h2>
-                      <div>
+                      <h3>
                         {/* Lorem Ipsum is simply dummy text of the printing and
                         typesetting industry. Lorem Ipsum has been the
                         industry's standard dummy text ever since the 1500s,
                         when an unknown printer took a galley of type and
                         scrambled. */}
                         {customRaffleData?.description}
-                      </div>
+                      </h3>
                     </div>
           </Grid>       
             <>
@@ -311,6 +313,7 @@ const RaffleEndedScreen: FC<IRaffleEndedScreenProps> = ({
                       raffle.proceeds.ticketPrice,
                       raffle.proceeds.mint
                     )}
+                    {" "}
                     {raffle.proceeds.mint.symbol}</span></td>
                 </tr>
                 <tr>

@@ -117,14 +117,14 @@ const RaffleOngoingScreen: FC<IRaffleOngoingScreenProps> = ({
             </Slider>
                <div className='description' style={{ textAlign: 'justify', color: 'white' }}>
                       <h2 style={{ textAlign: 'center' }}>Description</h2>
-                      <div>
+                      <h3>
                         {/* Lorem Ipsum is simply dummy text of the printing and
                         typesetting industry. Lorem Ipsum has been the
                         industry's standard dummy text ever since the 1500s,
                         when an unknown printer took a galley of type and
                         scrambled. */}
                         {customRaffleData?.description}
-                      </div>
+                      </h3>
                     </div>
           </Grid>
           <Grid item xs={12} md={7} lg={8} xl={8}>
@@ -214,10 +214,14 @@ const RaffleOngoingScreen: FC<IRaffleOngoingScreenProps> = ({
                   <td>
                   <img src={time} alt=""  className="time-icon" />
                   </td>
-                  <td className="td-2 end-text" style={{display: 'flex'}}>Ends in: <span className="span-12"><Countdown
+                  {/* <td className="td-2 end-text" style={{display: 'flex'}}>Ends in: <span className="span-12"><Countdown
                         style={{ fontSize: '18px',  fontFamily: "'Ceviche One', cursive", width:"10rem" }}
                         endTimestamp={raffle.endTimestamp}
-                      /></span></td> 
+                      /></span></td>  */}
+                   <td className="td-2 end-text" style={{display: 'flex'}}>Ends in: <span className="span-12"><Countdown
+                        style={{ fontSize: '20px', marginTop: 1,  fontFamily: "'Ceviche One', cursive", width:"10rem" }}
+                        endTimestamp={raffle.endTimestamp}
+                      /></span></td>
                 </tr>
               </table>
             </Grid>
