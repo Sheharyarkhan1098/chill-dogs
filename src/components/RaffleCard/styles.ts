@@ -23,6 +23,7 @@ export const useStyles = makeStyles<Theme, { device: DeviceType }>(
     media: {
       height: '100%',
       minHeight: '250px',
+      maxHeight: '250px',
       // padding: '20px',
       borderRadius: '35px'
     },

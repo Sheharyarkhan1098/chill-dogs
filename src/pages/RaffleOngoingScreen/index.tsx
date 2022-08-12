@@ -84,7 +84,7 @@ const RaffleOngoingScreen: FC<IRaffleOngoingScreenProps> = ({
       <div
         className="main"
       >
-        <Grid container spacing={1}>
+        <Grid container spacing={5}>
           <Grid item xs={12} md={4} lg={4} xl={3}>
             <div className="index-prize"></div>
             <Slider>
@@ -102,22 +102,22 @@ const RaffleOngoingScreen: FC<IRaffleOngoingScreenProps> = ({
                     >
                       Prize {i + 1}
                     </div>
-                    <div
+                    <div className='img-dev'
                       style={{
                         width: '100%',
-                        paddingLeft: '2rem ',
+                        // paddingLeft: '2rem ',
                         background: 'none',
                       }}
                     >
-                      <img src={obj.meta.imageUri} alt="" style={{width: '100%'}} />
+                      <img src={obj.meta.imageUri} alt="" className="carousel-img" />
                     </div>
                   </>
                 );
               })}
             </Slider>
-               <div className='description' style={{ textAlign: 'justify', color: 'white' }}>
+               <div className='description' style={{  color: 'white' }}>
                       <h2 style={{ textAlign: 'center' }}>Description</h2>
-                      <h3>
+                      <h3 className='text-description-12'>
                         {/* Lorem Ipsum is simply dummy text of the printing and
                         typesetting industry. Lorem Ipsum has been the
                         industry's standard dummy text ever since the 1500s,

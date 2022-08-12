@@ -59,7 +59,7 @@ const RaffleCard: FC<RaffleCardProps> = ({
       // }}
       className={`${classes.root} ${className}`}
       {...otherProps}
-      style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', color: '#81d4f2 !important ', borderRadius: "10px", border: "12px solid #81d4f2" }}
+      style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', color: '#81d4f2 !important ', borderRadius: "10px", border: "12px solid #81d4f2", minHeight: "560px", objectFit: 'contain'}}
     >
       {/* 
   <div className={classes.cardPrizesBadge}>
@@ -137,7 +137,8 @@ const RaffleCard: FC<RaffleCardProps> = ({
               }} 
               style={{ backgroundColor: 'white', color: "black", fontFamily: 'Poppins', marginTop:'34px', borderRadius: "30px" }}>
                 
-                Join Raffle</Button>
+                Join Raffle
+                </Button>
               :
               <Button variant='contained' onClick={() => {
                 push(`${routes.RAFFLES}/${raffle.publicKey}`);
