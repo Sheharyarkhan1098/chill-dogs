@@ -54,7 +54,7 @@ const AdminRaffleScreen: FC = () => {
       {currentRaffle ? (
         <>
           <div className={classes.headerContainer}>
-            <Typography variant="h3">
+            <Typography variant="h3" style={{color: "white"}}>
               Entrants list (total {currentRaffle.entrants.size})
             </Typography>
             <IconButton
