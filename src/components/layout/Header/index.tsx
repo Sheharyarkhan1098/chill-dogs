@@ -21,7 +21,7 @@ export interface HeaderProps {
 }
 
 const NAV_LINKS_LIST = [
-  { label: 'Chill Dogs Club', target: "/" },
+  { label: 'Trust Goats Raffle', target: "/" },
   // { label: 'Auction', target: routes.AUCTIONS },
   { label: 'Admin', target: routes.ADMIN.HOME, admin: true },
 ];

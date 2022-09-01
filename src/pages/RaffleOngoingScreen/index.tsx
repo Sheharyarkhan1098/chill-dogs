@@ -132,7 +132,7 @@ const RaffleOngoingScreen: FC<IRaffleOngoingScreenProps> = ({
               variant="h1"
               className="name-title"
               style={{
-                fontFamily: 'Rubik Wet Paint',
+                fontFamily: 'Montserrat',
                 color: '#81d4f2',
                 marginBottom: '0px',
                 textAlign: 'center',
