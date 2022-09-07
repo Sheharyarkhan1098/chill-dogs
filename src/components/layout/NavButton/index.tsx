@@ -37,7 +37,7 @@ useEffect(()=>{
     <>
       <Stack justifyContent="center" >
         <ButtonGroup >
-          <Button  style={{fontSize: font}}
+          <Button  style={{fontSize: font, textShadow: "0 0 30px #eeef9d"}}
             onClick={(event) => {
               if(label === "Auction"){
                 return

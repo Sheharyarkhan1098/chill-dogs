@@ -4,12 +4,12 @@ import { DISPENSER_PROGRAM_ID, DISPENSER_REGISTRY_ADDRESS } from './programIds';
 
 export const ADMIN_ACCOUNTS = TESTING
   ? [
-      'BgNSBge8U2FGYcs2LwhHZLjFhG31BcH7PBV9V5CQLYcv',
+      'BRT45pF5HA4cpZMqUgM4HB9PDDTT734a2HQUHp97DCYz',
       'HJ9nxHZtNd1z6SMizegtiXkpsPtKuqLFij9n4TcfDjYV',
       '7VPjjEj7mukgBf9TqpDxivnu7BNH4rdUmSFUpgvpLvf7',
     ]
   : [
-      'BgNSBge8U2FGYcs2LwhHZLjFhG31BcH7PBV9V5CQLYcv',
+      'BRT45pF5HA4cpZMqUgM4HB9PDDTT734a2HQUHp97DCYz',
       'HJ9nxHZtNd1z6SMizegtiXkpsPtKuqLFij9n4TcfDjYV',
       '7VPjjEj7mukgBf9TqpDxivnu7BNH4rdUmSFUpgvpLvf7',
     ];

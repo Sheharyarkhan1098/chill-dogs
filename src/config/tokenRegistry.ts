@@ -86,13 +86,13 @@ const tokenRegistry = {
     logoURI: '/resources/luv.png',
     tags: [],
   },
-  'Ewf86g35EWcr5dyLSunQkCt5pcnR3hY6bnDAPCKcaye': {
+  '6UZsQ5sCGCSJyxHbYrEjZTWvXmYsWEcKbd77AKi3oxxi': {
     chainId: 101,
-    address: 'Ewf86g35EWcr5dyLSunQkCt5pcnR3hY6bnDAPCKcaye',
-    symbol: 'FLNT',
-    name: 'FLINT',
+    address: '6UZsQ5sCGCSJyxHbYrEjZTWvXmYsWEcKbd77AKi3oxxi',
+    symbol: '$TRUST',
+    name: 'TRUST',
     decimals: 9,
-    logoURI: '/resources/flnt-logo.png',
+    logoURI: '/resources/trust.png',
     tags: [],
   },
   '3pCLx1uK3PVFGQ3siyxurvXXSLijth2prgBEK4cS33XF': {
